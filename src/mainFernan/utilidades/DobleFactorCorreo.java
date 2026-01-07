@@ -5,6 +5,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import mainFernan.utilidades.*;
 
 public class DobleFactorCorreo {
 
@@ -44,15 +45,10 @@ public class DobleFactorCorreo {
         }
     }
 
-    public static int tokenAleatorio(){
-        int numeroAleatorio = (int) (Math.random()* 9000) + 1000;
-        return numeroAleatorio;
-    }
-
     public static void main(String[] args) {
         String destinatario = "jgarlaz583@g.educaand.es"; // Destinatario del mensaje
         String asunto = "FernanEvents: Su código de verificación.";
-        String cuerpo = "<h2>Inserte el siguiente código en el programa: <strong>"+ tokenAleatorio() +"</strong> </h2>";
+        String cuerpo = "<h2>Inserte el siguiente código en el programa: <strong>"+ TokenAleatorio.tokenAleatorio() +"</strong> </h2>";
         enviarGMail(destinatario, asunto, cuerpo);
     }
 }
