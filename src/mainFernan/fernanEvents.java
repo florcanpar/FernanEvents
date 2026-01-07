@@ -1,9 +1,41 @@
 package mainFernan;
 import java.util.Scanner;
 
+import mainFernan.utilidades.*;
+
 public class fernanEvents {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+        // [i][0] -> nombre
+        // [i][1] -> contraseña
+        // [i][2] -> rol (ORGANIZADOR / ASISTENTE)
+        // [i][3] -> bloqueado (true / false)
+        // [i][4] -> validado por el correo (true / false)
+        // [i][5] -> cartera
+
+        String[][] usuarios = new String[10][6];
+
+        usuarios[0][0] = "admin";
+        usuarios[0][1] = "1234a";
+        usuarios[0][2] = "ADMIN";
+        usuarios[0][3] = "false";
+        usuarios[0][4] = "true";
+        usuarios[0][5] = "0";
+
+        usuarios[1][0] = "organizador";
+        usuarios[1][1] = "1234o";
+        usuarios[1][2] = "ORGANIZADOR";
+        usuarios[1][3] = "false";
+        usuarios[1][4] = "true";
+        usuarios[1][5] = "0";
+
+        usuarios[2][0] = "asistente1";
+        usuarios[2][1] = "1234a1";
+        usuarios[2][2] = "ASISTENTE";
+        usuarios[2][3] = "false";
+        usuarios[2][4] = "true";
+        usuarios[2][5] = "0";
 
         // probando si funciona github y estamos conectados
 
@@ -198,6 +230,7 @@ public class fernanEvents {
                         }else if (usuario.equals(administrador)) {
                             System.out.print("Inserte su contraseña: ");
                             contrasenia = sc.nextLine();
+
 
                             if (contrasenia.equals(contraAdmin)) {
                                 System.out.println("Bienvenido.");
