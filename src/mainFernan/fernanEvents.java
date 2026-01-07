@@ -37,7 +37,29 @@ public class fernanEvents {
         usuarios[2][4] = "true";
         usuarios[2][5] = "0";
 
-        // probando si funciona github y estamos conectados
+        // [i][0] -> nombre
+        // [i][1] -> descripción breve
+        // [i][2] -> categoría
+        // [i][3] -> fecha y hora
+        // [i][4] -> aforo
+        // [i][5] -> inscritos
+        // [i][6] -> tipo de entrada 1
+        // [i][7] -> entrada 1 descripción
+        // [i][8] -> entrada 1 existencias
+        // [i][9] -> entrada 1 precio
+        // [i][10] -> tipo de entrada 2
+        // [i][11] -> entrada 2 descripción
+        // [i][12] -> entrada 2 existencias
+        // [i][13] -> entrada 2 precio
+        // [i][14] -> tipo de entrada 3
+        // [i][15] -> entrada 3 descripción
+        // [i][16] -> entrada 3 existencias
+        // [i][17] -> entrada 3 precio
+
+        // [0][j] -> evento 1
+        // [1][j] -> evento 2
+        // [2][j] -> evento 3
+        // etc...
 
         String[][] eventos = new String[19][18];
         eventos[0][0] = "Prueba";
@@ -312,21 +334,15 @@ public class fernanEvents {
                     //menu organizador
                     if (usuario.equals(organizador) && contrasenia.equals(contraOrganizador) && contraseniaCorrecta){
                         do {
-                            menuOrganizador();
+                            mainFernan.utilidades.Funciones.menuOrganizador();
                             opcion = Integer.parseInt(sc.nextLine());
 
                             switch (opcion){
                                 case 1:
                                     System.out.println("----Mis eventos----");
                                     do {
-                                        System.out.println("Bienvenido a tus eventos");
-                                        System.out.println("1. Ver eventos.");
-                                        System.out.println("2. Crear eventos.");
-                                        System.out.println("3. Editar eventos.");
-                                        System.out.println("4. Eliminar eventos.");
-                                        System.out.println("5. Salir.");
+                                        mainFernan.utilidades.Funciones.menuOrganizadorEventos();
                                         opcion2 = Integer.parseInt(sc.nextLine());
-
                                         switch (opcion2){
                                             case 1:
                                                 System.out.println("Tus eventos");
@@ -1373,7 +1389,7 @@ public class fernanEvents {
                     //menu administrador
                     if (usuario.equals(administrador)) {
                         do {
-                            menuAdministrador();
+                            mainFernan.utilidades.Funciones.menuAdministrador();
                             opcion = Integer.parseInt(sc.nextLine());
                             switch (opcion) {
                                 case 1:
@@ -2149,9 +2165,8 @@ public class fernanEvents {
                     //menu asistente1
                     if (usuario.equals(asistente1) && contrasenia.equals(contraAsistente1) && contraseniaCorrecta) {
                         do {
-                            menuAsistente();
+                            mainFernan.utilidades.Funciones.menuAsistente();
                             opcion = Integer.parseInt(sc.nextLine());
-
                             switch (opcion) {
                                 case 1:
                                     System.out.println("Bienvenido a los eventos a los que está inscrito.");
@@ -5380,41 +5395,4 @@ public class fernanEvents {
             }
         }while (opcion != 2);
     }
-
-    public static void menuAdministrador(){
-        final String VERDE = "\u001B[32m";
-        final String RESET_COLOR = "\u001B[0m";
-
-        System.out.println(VERDE + "----Menú Administrador----" + RESET_COLOR);
-        System.out.println("1. Panel de control.");
-        System.out.println("2. Eventos.");
-        System.out.println("3. Cartera Digital.");
-        System.out.println("4. Configuración.");
-        System.out.println("5. Cerrar Sesión");
-    }
-
-    public static void menuOrganizador(){
-        final String AZUL = "\u001B[34m";
-        final String RESET_COLOR = "\u001B[0m";
-
-        System.out.println(AZUL + "----Menú Organizador----" + RESET_COLOR);
-        System.out.println("1. Mis Eventos.");
-        System.out.println("2. Cartera Digital.");
-        System.out.println("3. Configuración.");
-        System.out.println("4. Cerrar Sesión");
-    }
-
-    public static void menuAsistente(){
-        final String MORADO = "\u001B[35m";
-        final String RESET_COLOR = "\u001B[0m";
-
-        System.out.println(MORADO + "----Menú Asistente----" + RESET_COLOR);
-        System.out.println("1. Mis Eventos.");
-        System.out.println("2. Eventos.");
-        System.out.println("3. Cartera Digital.");
-        System.out.println("4. Invita a un amigo");
-        System.out.println("5. Configuración.");
-        System.out.println("6. Cerrar Sesión");
-    }
-
 }
