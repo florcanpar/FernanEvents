@@ -5,6 +5,8 @@ public class fernanEvents {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        // probando si funciona github y estamos conectados
+
         String versionDetallada = "";
 
         //USUARIOS
@@ -28,7 +30,6 @@ public class fernanEvents {
         boolean asistente1InscritoProyecto1 = false;
         boolean asistente1InscritoProyecto2 = false;
         boolean asistente1InscritoProyecto3 = false;
-
 
         String asistente2 = "asistente2";
         String contraAsistente2 = "1234a2";
