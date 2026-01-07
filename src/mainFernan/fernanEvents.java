@@ -39,7 +39,25 @@ public class fernanEvents {
 
         // probando si funciona github y estamos conectados
 
-        String versionDetallada = "";
+        String[][] eventos = new String[19][18];
+        eventos[0][0] = "Prueba";
+        eventos[0][1] = "Una prueba para comprobar que todo funciona correctamente.";
+        eventos[0][2] = "Arte.";
+        eventos[0][3] = "18/11/2025 a las 16:00.";
+        eventos[0][4] = "20";
+        eventos[0][5] = "5";
+        eventos[0][6] = "Pista";
+        eventos[0][7] = "La pista para los pobres.";
+        eventos[0][8] = "200";
+        eventos[0][9] = "70";
+        eventos[0][10] = "Asiento";
+        eventos[0][11] = "Los asientos para la clase media.";
+        eventos[0][12] = "100";
+        eventos[0][13] = "100";
+        eventos[0][14] = "VIP";
+        eventos[0][15] = "VIP pa los chulos.";
+        eventos[0][16] = "20";
+        eventos[0][17] = "200";
 
         //USUARIOS
         String usuario = "";
@@ -103,7 +121,6 @@ public class fernanEvents {
         final String CYAN = "\u001B[36m";
         final String RESET_COLOR = "\u001B[0m";
 
-
         //EVENTOS
         String porcentajeLleno = "█" + VERDE;
         String porcentajeVacio = "█" + BLANCO;
@@ -128,6 +145,8 @@ public class fernanEvents {
         String tipoEntrada3DescripcionProyecto1 = "Vip pa los chulos.";
         int tipoEntrada3ExistenciasProyecto1 = 20;
         float tipoEntrada3PrecioProyecto1 = 200f;
+
+        String versionDetallada = "";
 
         //variables proyecto 2
         String nombreProyecto2 = "";
