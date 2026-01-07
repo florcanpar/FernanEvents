@@ -8,7 +8,7 @@ public class Cadenas {
 
     public static boolean contraseniaFuerte(String contrasenia){
         if (contrasenia.length() < 8) return false;
-        if (!tieneMayuscula(contrasenia)) return false;
+        if (!tieneMinuscula(contrasenia)) return false;
         if (!tieneMayuscula(contrasenia)) return false;
         if (!tieneNumero(contrasenia)) return false;
         if (!tieneSimbolo(contrasenia)) return false;
