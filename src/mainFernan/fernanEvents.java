@@ -55,13 +55,14 @@ public class fernanEvents {
         // [i][15] -> entrada 3 descripción
         // [i][16] -> entrada 3 existencias
         // [i][17] -> entrada 3 precio
+        // [i][18] -> id evento que pone automáticamente el programa
 
         // [0][j] -> evento 1
         // [1][j] -> evento 2
         // [2][j] -> evento 3
         // etc...
 
-        String[][] eventos = new String[19][18];
+        String[][] eventos = new String[19][19];
         eventos[0][0] = "Prueba";
         eventos[0][1] = "Una prueba para comprobar que todo funciona correctamente.";
         eventos[0][2] = "Arte.";
@@ -80,6 +81,7 @@ public class fernanEvents {
         eventos[0][15] = "VIP pa los chulos.";
         eventos[0][16] = "20";
         eventos[0][17] = "200";
+        eventos[0][18] = "201";
 
         //USUARIOS
         String usuario = "";
@@ -219,39 +221,7 @@ public class fernanEvents {
         int formulaGraficoBarrasProyecto3 = (100 * inscritosProyecto3) / aforoProyecto3;
 
         do {
-            System.out.println(AZUL + """
-                          :   :   :   :   :     \s
-                       ***:***:***:***:***:***  \s
-                       ***********************  \s
-                    
-                         :: ::  :: :: .:: ::    \s
-                    
-                         ::  :  :: ==  :  ::    \s
-                         :: ::. :: :: .:: ::    \s
-                             .         .        \s
-                         ::  :  :. .:  :  ::    \s
-                       :                     :  \s
-                       
-                    """ + RESET_COLOR);
-            System.out.println(CYAN + """
-                       ______                         \s
-                       |  ___|                        \s
-                       | |_ ___ _ __ _ __   __ _ _ __ \s
-                       |  _/ _ \\ '__| '_ \\ / _` | '_ \\\s
-                       | ||  __/ |  | | | | (_| | | | |
-                       \\_| \\___|_|  |_| |_|\\__,_|_| |_|
-                    """ + RESET_COLOR);
-            System.out.println(CYAN + """
-                        _____                _      \s
-                       |  ___|              | |     \s
-                       | |____   _____ _ __ | |_ ___\s
-                       |  __\\ \\ / / _ \\ '_ \\| __/ __|
-                       | |___\\ V /  __/ | | | |_\\__ \\
-                       \\____/ \\_/ \\___|_| |_|\\__|___/
-                    
-                    """ + RESET_COLOR);
-            System.out.println("1. Iniciar sesión");
-            System.out.println("2. Salir");
+            mainFernan.utilidades.Funciones.logoFernan();
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {

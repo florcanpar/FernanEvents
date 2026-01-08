@@ -2,6 +2,45 @@ package mainFernan.utilidades;
 
 public class Funciones {
 
+    public static void logoFernan(){
+        final String CYAN = "\u001B[36m";
+        final String RESET_COLOR = "\u001B[0m";
+        final String AZUL = "\u001B[34m";
+        System.out.println(AZUL + """
+                          :   :   :   :   :     \s
+                       ***:***:***:***:***:***  \s
+                       ***********************  \s
+                    
+                         :: ::  :: :: .:: ::    \s
+                    
+                         ::  :  :: ==  :  ::    \s
+                         :: ::. :: :: .:: ::    \s
+                             .         .        \s
+                         ::  :  :. .:  :  ::    \s
+                       :                     :  \s
+                       
+                    """ + RESET_COLOR);
+        System.out.println(CYAN + """
+                       ______                         \s
+                       |  ___|                        \s
+                       | |_ ___ _ __ _ __   __ _ _ __ \s
+                       |  _/ _ \\ '__| '_ \\ / _` | '_ \\\s
+                       | ||  __/ |  | | | | (_| | | | |
+                       \\_| \\___|_|  |_| |_|\\__,_|_| |_|
+                    """ + RESET_COLOR);
+        System.out.println(CYAN + """
+                        _____                _      \s
+                       |  ___|              | |     \s
+                       | |____   _____ _ __ | |_ ___\s
+                       |  __\\ \\ / / _ \\ '_ \\| __/ __|
+                       | |___\\ V /  __/ | | | |_\\__ \\
+                       \\____/ \\_/ \\___|_| |_|\\__|___/
+                    
+                    """ + RESET_COLOR);
+        System.out.println("1. Iniciar sesión");
+        System.out.println("2. Salir");
+    }
+
     public static void menuAsistente(){
         final String MORADO = "\u001B[35m";
         final String RESET_COLOR = "\u001B[0m";
