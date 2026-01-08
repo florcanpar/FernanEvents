@@ -13,8 +13,10 @@ public class fernanEvents {
         // [i][3] -> bloqueado (true / false)
         // [i][4] -> validado por el correo (true / false)
         // [i][5] -> cartera
+        // [i][6] -> ID
 
-        String[][] usuarios = new String[10][6];
+
+        String[][] usuarios = new String[10][7];
 
         usuarios[0][0] = "admin";
         usuarios[0][1] = "1234a";
@@ -22,20 +24,22 @@ public class fernanEvents {
         usuarios[0][3] = "false";
         usuarios[0][4] = "true";
         usuarios[0][5] = "0";
+        usuarios[0][6] = "100";
+
 
         usuarios[1][0] = "organizador";
         usuarios[1][1] = "1234o";
         usuarios[1][2] = "ORGANIZADOR";
         usuarios[1][3] = "false";
         usuarios[1][4] = "true";
-        usuarios[1][5] = "0";
+        usuarios[1][5] = "101";
 
         usuarios[2][0] = "asistente1";
         usuarios[2][1] = "1234a1";
         usuarios[2][2] = "ASISTENTE";
         usuarios[2][3] = "false";
         usuarios[2][4] = "true";
-        usuarios[2][5] = "0";
+        usuarios[2][5] = "102";
 
         // [i][0] -> nombre
         // [i][1] -> descripción breve
@@ -80,6 +84,17 @@ public class fernanEvents {
         eventos[0][15] = "VIP pa los chulos.";
         eventos[0][16] = "20";
         eventos[0][17] = "200";
+
+
+
+
+        //LOGIN
+
+
+
+
+
+
 
         //USUARIOS
         String usuario = "";
