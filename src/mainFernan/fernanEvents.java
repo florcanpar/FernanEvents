@@ -15,7 +15,6 @@ public class fernanEvents {
         // [i][5] -> cartera
         // [i][6] -> ID
 
-
         String[][] usuarios = new String[10][7];
 
         usuarios[0][0] = "admin";
@@ -25,7 +24,6 @@ public class fernanEvents {
         usuarios[0][4] = "true";
         usuarios[0][5] = "0";
         usuarios[0][6] = "100";
-
 
         usuarios[1][0] = "organizador";
         usuarios[1][1] = "1234o";
@@ -60,13 +58,14 @@ public class fernanEvents {
         // [i][16] -> entrada 3 existencias
         // [i][17] -> entrada 3 precio
         // [i][18] -> id evento que pone automáticamente el programa
+        // [i][19] -> id del organizador que ha creado el evento
 
         // [0][j] -> evento 1
         // [1][j] -> evento 2
         // [2][j] -> evento 3
         // etc...
 
-        String[][] eventos = new String[19][19];
+        String[][] eventos = new String[19][20];
         eventos[0][0] = "Prueba";
         eventos[0][1] = "Una prueba para comprobar que todo funciona correctamente.";
         eventos[0][2] = "Arte.";
@@ -85,7 +84,8 @@ public class fernanEvents {
         eventos[0][15] = "VIP pa los chulos.";
         eventos[0][16] = "20";
         eventos[0][17] = "200";
-        eventos[0][18] = "201";
+        eventos[0][18] = "1000";
+        eventos[0][19] = "101";
 
 
 
