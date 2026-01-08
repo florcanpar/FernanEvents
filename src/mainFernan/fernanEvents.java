@@ -15,7 +15,7 @@ public class fernanEvents {
         // [i][5] -> cartera
         // [i][6] -> ID
 
-        String[][] usuarios = new String[10][7];
+        String[][] usuarios = new String[9][7];
 
         usuarios[0][0] = "admin";
         usuarios[0][1] = "1234a";
@@ -89,8 +89,37 @@ public class fernanEvents {
 
 
 
+        int eleccionUsuario;
+        int usuarioRegistrado = -1;
 
         //LOGIN
+
+
+        do{
+            mainFernan.utilidades.Funciones.logoFernan();
+            eleccionUsuario = Integer.parseInt(sc.nextLine());
+
+            switch (eleccionUsuario){
+                case 1:
+                    usuarioRegistrado = mainFernan.utilidades.Funciones.iniciarSesion(usuarios, sc);
+
+                if (usuarioRegistrado != -1){
+                    System.out.println("Bienvenido " + usuarios[usuarioRegistrado][0]);
+                    System.out.println("Con rol: " + usuarios[usuarioRegistrado][0]);
+                }
+                break;
+
+                case 2:
+                    mainFernan.utilidades.Funciones.crearUsuario(usuarios, sc);
+                break;
+
+                case 3:
+                    System.out.println("Gracias por tu visiata....");
+                    break;
+            }
+
+        }while (eleccionUsuario != 3);
+
 
 
 
