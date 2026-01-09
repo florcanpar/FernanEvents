@@ -156,7 +156,7 @@ public class Funciones {
                 }
                 if (usuarios[i][4].equals("false")) {
                     System.out.println("Usuario no validado, iniciando validación...");
-                    usuarioValidado(usuarios, i, sc);
+                    usuarioValidado(usuarios, i);
 
                     if (usuarios[i][3].equals("true")) {
                         System.out.println("Acceso denegado");

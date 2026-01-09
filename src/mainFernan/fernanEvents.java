@@ -101,7 +101,7 @@ public class fernanEvents {
 
             switch (eleccionUsuario){
                 case 1:
-                    usuarioRegistrado = mainFernan.utilidades.Funciones.iniciarSesion(usuarios, sc);
+                    usuarioRegistrado = mainFernan.utilidades.Funciones.iniciarSesion(usuarios);
 
                 if (usuarioRegistrado != -1){
                     System.out.println("Bienvenido " + usuarios[usuarioRegistrado][0]);
@@ -110,7 +110,7 @@ public class fernanEvents {
                 break;
 
                 case 2:
-                    mainFernan.utilidades.Funciones.crearUsuario(usuarios, sc);
+                    mainFernan.utilidades.Funciones.crearUsuario(usuarios);
                 break;
 
                 case 3:
