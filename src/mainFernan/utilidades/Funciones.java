@@ -88,6 +88,47 @@ public class Funciones {
         System.out.println("5. Cerrar Sesión");
     }
 
+    /**
+     * Esta función recorre los eventos creados por el organizador y muestra sus nombres para que
+     * el organizador pueda elegir cuál quiere ver.
+     * @param evento
+     * @param usuario
+     * @param fila
+     */
+
+    public static void verEventosCreadosOrganizador(String[][] evento, String[][] usuario, int fila) {
+        int contador = 0;
+        System.out.println("¿Qué proyecto quiere ver?");
+        for (int i = 0; i < evento.length; i++) {
+            for (int j = 0; j < evento[i].length; j++) {
+                if (!evento[i][0].isEmpty() && evento[i][20].equals(usuario[fila][6])) {
+                    contador++;
+                    System.out.println(contador + evento[i][0]);
+                } else {
+                    System.out.println("0. Salir.");
+                }
+            }
+        }
+    }
+
+    public static void verEventoVersionNoDetallada(String[][] evento, int fila) {
+        System.out.println("Nombre: " + evento[fila][0]);
+        System.out.println("Descripción: " + evento[fila][1]);
+        System.out.println("Categoría: " + evento[fila][2]);
+        System.out.println("Fecha y Hora: " + evento[fila][3]);
+        System.out.println("Aforo: " + evento[fila][4]);
+        System.out.println("Número de inscritos: " + evento[fila][5]);
+        if (evento[fila][6].isEmpty() && evento[fila][14].isEmpty()) {
+            System.out.println("Tipo de entradas: " + evento[fila][6]);
+        } else if (evento[fila][10].isEmpty() && (!evento[fila][14].isEmpty())) {
+            System.out.println("Tipo de entradas: " + evento[fila][6] + " y " + evento[fila][14]);
+        } else if ((!evento[fila][10].isEmpty()) && evento[fila][14].isEmpty()) {
+            System.out.println("Tipo de entradas: " + evento[fila][6] + " y " + evento[fila][10]);
+        } else if ((!evento[fila][10].isEmpty()) && (!evento[fila][14].isEmpty())) {
+            System.out.println("Tipo de entradas: " + evento[fila][6] + ", " + evento[fila][10] + " y " + evento[fila][14]);
+        }
+    }
+
 
     //ESTO ES DEL LOGIN
     public static int iniciarSesion(String[][] usuarios, Scanner sc) {
