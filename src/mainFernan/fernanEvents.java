@@ -116,6 +116,7 @@ public class fernanEvents {
                 case 3:
                     System.out.println("Gracias por tu visiata....");
                     break;
+
             }
 
         }while (eleccionUsuario != 3);

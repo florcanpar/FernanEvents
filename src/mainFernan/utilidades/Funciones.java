@@ -1,5 +1,6 @@
 package mainFernan.utilidades;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Funciones {
@@ -130,23 +131,40 @@ public class Funciones {
     }
 
     //ESTO ES DEL LOGIN
-    public static int iniciarSesion(String[][] usuarios, Scanner sc) {
+
+    public static int iniciarSesion(String[][] usuarios) {
+        Scanner sc = new Scanner(System.in);
 
         System.out.print("Usuario: ");
-        String nombreUsuario = sc.nextLine().toLowerCase();
+        String usuario = sc.nextLine().toLowerCase();
 
         System.out.print("Contraseña: ");
-        String contrasenia = sc.nextLine();
+        String pass = sc.nextLine();
 
         for (int i = 0; i < usuarios.length; i++) {
-            if (usuarios[i][0] != null && usuarios[i][0].equals(nombreUsuario)) {
-                if (usuarios[i][1].equals(contrasenia)) {
-                    System.out.println("Inicio de sesión correcto");
-                    return i;
-                } else {
+
+            if (usuarios[i][0] != null && usuarios[i][0].equals(usuario)) {
+
+                if (!usuarios[i][1].equals(pass)) {
                     System.out.println("Contraseña incorrecta");
                     return -1;
                 }
+
+                if (usuarios[i][3].equals("true")) {
+                    System.out.println("El usuario está BLOQUEADO");
+                    return -1;
+                }
+                if (usuarios[i][4].equals("false")) {
+                    System.out.println("Usuario no validado, iniciando validación...");
+                    usuarioValidado(usuarios, i, sc);
+
+                    if (usuarios[i][3].equals("true")) {
+                        System.out.println("Acceso denegado");
+                        return -1;
+                    }
+                }
+                System.out.println("Inicio de sesión correcto");
+                return i;
             }
         }
 
@@ -154,61 +172,131 @@ public class Funciones {
         return -1;
     }
 
-    public static void crearUsuario(String[][] usuarios, Scanner sc){
 
-        int posicionLibre = -1;
+    public static boolean usuarioBloqueado(String[][] usuarios, int posicionUsuario){
+        return usuarios[posicionUsuario][3].equals("true");
+    }
+
+    public static void usuarioValidado(String[][] usuarios, int pos) {
+        Scanner sc = new Scanner(System.in);
+
+        String codigo = String.valueOf(TokenAleatorio.tokenAleatorio());
+        int intentos = 3;
+
+        DobleFactorCorreo.enviarGMail(
+                "jgarlaz583@g.educaand.es",
+                "FernanEvents: Código de verificación",
+                "<h2>Inserte el siguiente código en el programa: <strong>" + codigo + "</strong></h2>"
+        );
+
+        while (intentos > 0) {
+            System.out.print("Introduce el código enviado por Gmail: ");
+            String codigoUsuario = sc.nextLine();
+
+            if (codigoUsuario.equals(codigo)) {
+                usuarios[pos][4] = "true";
+                System.out.println("Usuario validado con éxito");
+                return;
+            } else {
+                intentos--;
+                System.out.println("Código incorrecto. Intentos restantes: " + intentos);
+            }
+        }
+
+        usuarios[pos][3] = "true";
+        System.out.println("Usuario bloqueado por seguridad");
+    }
+
+    public static void carteraUsuario(String[][] usuarios, int pos) {
+        Scanner sc = new Scanner(System.in);
+        double cartera = Double.parseDouble(usuarios[pos][5]);
+        int opcion;
+
+        do {
+            System.out.println("-_-_-_-CARTERA-_-_-_-");
+            System.out.println("Saldo: " + cartera + "€");
+            System.out.println("1. Ingresar");
+            System.out.println("2. Retirar");
+            System.out.println("3. Salir");
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Cantidad: ");
+                    double ingresar = Double.parseDouble(sc.nextLine());
+                    if (ingresar > 0) cartera += ingresar;
+                    break;
+
+                case 2:
+                    System.out.print("Cantidad: ");
+                    double retirar = Double.parseDouble(sc.nextLine());
+                    if (retirar > 0 && cartera >= retirar) cartera -= retirar;
+                    break;
+            }
+
+        } while (opcion != 3);
+
+        usuarios[pos][5] = String.valueOf(cartera);
+    }
+
+    public static void crearUsuario(String[][] usuarios) {
+        Scanner sc = new Scanner(System.in);
+        int posLibre = -1;
 
         for (int i = 0; i < usuarios.length; i++) {
-            if (usuarios[i][0] != null){
-                posicionLibre = i;
+            if (usuarios[i][0] == null) {
+                posLibre = i;
                 break;
             }
         }
 
-        if (posicionLibre == -1){
-            System.out.println("No se pueden crear más usuarios.");
+        if (posLibre == -1) {
+            System.out.println("No se pueden crear más usuarios");
             return;
         }
 
-        System.out.print("Nuevo usuario = ");
-        String nombreUsuario = sc.nextLine().toLowerCase();
+        System.out.print("Nuevo usuario: ");
+        String usuario = sc.nextLine().toLowerCase();
 
         for (int i = 0; i < usuarios.length; i++) {
-            if (usuarios[i][0] != null && usuarios[i][0].equals(nombreUsuario)){
+            if (usuarios[i][0] != null && usuarios[i][0].equals(usuario)) {
                 System.out.println("Ese usuario ya existe");
                 return;
             }
         }
 
         System.out.print("Contraseña: ");
-        String contraseniaUsuario = sc.nextLine();
+        String pass1 = sc.nextLine();
 
         System.out.print("Repite contraseña: ");
-        String contraseniaUsuarioRepetida = sc.nextLine();
+        String pass2 = sc.nextLine();
 
-        if (!Cadenas.contraseniaSonIguales(contraseniaUsuario, contraseniaUsuarioRepetida)){
-            System.out.println("Las contraseñas no coinciden.");
+        if (!pass1.equals(pass2)) {
+            System.out.println("Las contraseñas no coinciden");
             return;
         }
 
-        if (!Cadenas.contraseniaFuerte(contraseniaUsuario)){
-            System.out.println("La contrasenia es debil");
-            return;
-        }
-
-        String tipoDeUsuario;
-
+        String rol;
         do {
-            System.out.print("Tipo de usuario ASISTENTE/GESTOR: ");
-            tipoDeUsuario = sc.nextLine().toUpperCase();
+            System.out.print("Rol (ASISTENTE / ORGANIZADOR): ");
+            rol = sc.nextLine().toUpperCase();
+        } while (!rol.equals("ASISTENTE") && !rol.equals("ORGANIZADOR"));
 
-            if (!tipoDeUsuario.equals("ASISTENTE") && !tipoDeUsuario.equals("GESTOR")){
-                System.out.println("El rol que haselegido es inválido");
-            }
-        }while (!tipoDeUsuario.equals("ASISTENTE") && !tipoDeUsuario.equals("GESTOR"));
+        usuarios[posLibre][0] = usuario;
+        usuarios[posLibre][1] = pass1;
+        usuarios[posLibre][2] = rol;
+        usuarios[posLibre][3] = "false";
+        usuarios[posLibre][4] = "false";
+        usuarios[posLibre][5] = "0";
+        usuarios[posLibre][6] = String.valueOf(100 + posLibre);
 
+        System.out.println("Usuario creado correctamente. Debe validarse al iniciar sesión.");
     }
 
+
+
+    //EVENTOS
     public static void graficoBarras(String inscritosProyectos, String aforoProyecto, String porcentajeLleno, String porcentajeVacio){
         int formulaGrafico = (100 * Integer.parseInt(inscritosProyectos)) / Integer.parseInt(aforoProyecto);
         final String RESET_COLOR = "\u001B[0m";
