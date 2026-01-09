@@ -129,7 +129,6 @@ public class Funciones {
         }
     }
 
-
     //ESTO ES DEL LOGIN
     public static int iniciarSesion(String[][] usuarios, Scanner sc) {
 
@@ -208,6 +207,81 @@ public class Funciones {
             }
         }while (!tipoDeUsuario.equals("ASISTENTE") && !tipoDeUsuario.equals("GESTOR"));
 
+    }
+
+    public static void graficoBarras(String inscritosProyectos, String aforoProyecto, String porcentajeLleno, String porcentajeVacio){
+        int formulaGrafico = (100 * Integer.parseInt(inscritosProyectos)) / Integer.parseInt(aforoProyecto);
+        final String RESET_COLOR = "\u001B[0m";
+        System.out.print(formulaGrafico + "% [");
+        for (int i = 0; i < 100; i++) {
+            if (i <= formulaGrafico){
+                System.out.print(porcentajeLleno);
+            } else {
+                System.out.print(porcentajeVacio);
+            }
+        }
+        System.out.print("]" + RESET_COLOR);
+    }
+
+    public static void entradasDetalladas(String tipo, String descripcion, String numeroEntrada, String precioEntrada){
+        System.out.println("Tipo de entrada " + tipo + ": ");
+        System.out.println("Descripción: " + descripcion);
+        System.out.println("Número de entradas: " + numeroEntrada);
+        System.out.println("Precio: " + precioEntrada + "€.");
+    }
+
+    public static void crearEditarEvento(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Inserte un nombre para su evento: ");
+        String nombre = sc.nextLine();
+        if (nombre.isEmpty()){
+            System.out.println("Debe insertar un nombre de evento obligatoriamente.");
+        } else {
+            System.out.println("Inserte una descripción para su evento: ");
+            String descripcion = sc.nextLine();
+            System.out.println("Inserte una categoría para su evento: ");
+            String categoria = sc.nextLine();
+            System.out.println("Inserte una fecha (DD/MM/AAAA) y hora (HH:MM) para su evento: ");
+            String fechaYHora = sc.nextLine();
+            System.out.println("Inserte un aforo máximo para su evento: ");
+            String aforo = sc.nextLine();
+            System.out.println("¿Cuántos tipos de entradas vas a ofrecer? (1, 2 o 3)");
+            int opcionEntradas = Integer.parseInt(sc.nextLine());
+        }
+    }
+
+    public static void crearEntradas(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Inserte un tipo de entrada: ");
+        String tipo = sc.nextLine();
+        while (tipo.isEmpty()) {
+            System.out.println("La entrada tiene que tener un nombre.");
+            System.out.println("Inserte un tipo de entrada: ");
+            tipo = sc.nextLine();
+        }
+        System.out.println("Inserte una descripción para este tipo de entrada:");
+        String descripcion = sc.nextLine();
+        System.out.println("Inserte un número de entradas para las entradas: ");
+        String existencias = sc.nextLine();
+        System.out.println("Inserte un precio para este tipo de entrada: ");
+        String precio = sc.nextLine();
+    }
+
+    public static void eliminarEvento(String nombre, String descripcion, String categoria, String fechaYHora, String aforo, String inscritos, String idEvento){
+        nombre = "";
+        descripcion = "";
+        categoria = "";
+        fechaYHora = "";
+        aforo = "";
+        inscritos = "";
+        idEvento = "";
+    }
+
+    public static void eliminarEntradas(String tipo, String descripcion, String existencias, String precio){
+        tipo = "";
+        descripcion = "";
+        existencias = "";
+        precio = "";
     }
 
 }
