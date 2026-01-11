@@ -1,8 +1,6 @@
 package mainFernan;
 import java.util.Scanner;
 
-import mainFernan.utilidades.*;
-
 public class fernanEvents {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -70,7 +68,7 @@ public class fernanEvents {
         // [2][j] -> evento 3
         // etc...
 
-        String[][] eventos = new String[19][22];
+        String[][] eventos = new String[19][23];
         eventos[0][0] = "Prueba";
         eventos[0][1] = "Una prueba para comprobar que todo funciona correctamente.";
         eventos[0][2] = "Arte.";
@@ -104,31 +102,53 @@ public class fernanEvents {
 
         //LOGIN
 
+        int opcion;
+        int idEvento = 22;
+        int idUsuario = 0;
+
 
         do {
-            mainFernan.utilidades.Funciones.logoFernan();
-            eleccionUsuario = Integer.parseInt(sc.nextLine());
+            System.out.println("1. Crear usuario");
+            System.out.println("2. Iniciar sesión");
+            System.out.println("3. Salir");
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
 
-            switch (eleccionUsuario) {
+            switch (opcion) {
                 case 1:
-                    usuarioRegistrado = mainFernan.utilidades.Funciones.iniciarSesion(usuarios);
-
-                    if (usuarioRegistrado != -1) {
-                        System.out.println("Bienvenido " + usuarios[usuarioRegistrado][0]);
-                        System.out.println("Con rol: " + usuarios[usuarioRegistrado][0]);
-                    }
-                    break;
-
-                case 2:
                     mainFernan.utilidades.Funciones.crearUsuario(usuarios);
                     break;
 
-                case 3:
-                    System.out.println("Gracias por tu visita....");
+                case 2:
+                    idUsuario = mainFernan.utilidades.Funciones.iniciarSesion(usuarios);
+
+                    if (idUsuario != -1) {
+                        String rol = usuarios[idUsuario][2];
+
+                        switch (rol) {
+                            case "ASISTENTE":
+                                mainFernan.utilidades.Funciones.menuAsistenteUsuario(usuarios, eventos, invitados, eventosCompradosAsistente, idUsuario, idEvento);
+                                break;
+
+                            case "ORGANIZADOR":
+                                mainFernan.utilidades.Funciones.menuOrganizadorUsuario(usuarios, eventos, idUsuario, idEvento);
+                                break;
+
+                            case "ADMIN":
+                                mainFernan.utilidades.Funciones.menuAdministradorUsuario(usuarios, eventos, idUsuario, idEvento);
+                                break;
+                        }
+                    }
                     break;
 
+                case 3:
+                    System.out.println("Saliendo del programa...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida");
             }
 
-        } while (eleccionUsuario != 3);
+        } while (opcion != 3);
     }
 }
