@@ -526,9 +526,9 @@ public class Funciones {
                     System.out.print("Introduce la id del evento que deseas editar: ");
                     idEvento = Integer.parseInt(sc.nextLine());
                     crearEditarEvento(eventos, idEvento);
-                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][7]));
-                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][12]));
-                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][17]));
+                    crearEntradas(eventos, idEvento, 7);
+                    crearEntradas(eventos, idEvento, 12);
+                    crearEntradas(eventos, idEvento, 17);
                 break;
                 case 3:
                     System.out.print("Introduce la id del evento que deseas eliminar: ");
@@ -792,7 +792,6 @@ public class Funciones {
             System.out.println("Inserte un aforo máximo para su evento: ");
             eventos[idEvento][4] = sc.nextLine();
             eventos[idEvento][5] = "0";
-            eventos[idEvento][5] = "0";
         }
     }
 
@@ -851,9 +850,9 @@ public class Funciones {
                     }
                     System.out.println("Si desea salir escriba 'S'.");
                     System.out.print("Elija una opción: ");
-                    String opcionEvento = sc.nextLine();
+                    String opcionEvento = sc.nextLine().toLowerCase();
 
-                    if (opcionEvento.equals("S") || opcionEvento.equals("s")) {
+                    if (opcionEvento.equals("s")) {
                         System.out.println("Saliendo. . .");
                     } else {
                         int indiceEncontrado = -1;
@@ -881,7 +880,7 @@ public class Funciones {
                                 System.out.println("Saliendo . . .");
                             }
                         } else {
-                            System.out.println("ID no válido o no tienes permiso para verlo.");
+                            System.out.println("Inválido.");
                         }
                     }
                 break;
@@ -895,16 +894,36 @@ public class Funciones {
                     }
                     if (id == -1) {
                         System.out.println("No se pueden crear más eventos.");
-                    }else {
-                        for (int i = 0; i < eventos.length; i++) {
-                            for (int j = 0; j < eventos[i].length; j++) {
-                                if (eventos[i][0].isEmpty()){
-                                    crearEditarEvento(eventos, idEvento);
-                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][7]));
-                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][12]));
-                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][17]));
-                                }
+                    } else {
+                        System.out.println("Indique su ID de usuario: ");
+                        idUsuario = Integer.parseInt(sc.nextLine());
+
+                        crearEditarEvento(eventos, id);
+
+                        if (eventos[id][0] != null && !eventos[id][0].isEmpty()) {
+
+                            System.out.println("¿Cuántas entradas quiere crear? (1, 2 o 3)");
+                            int opcionEntradas = Integer.parseInt(sc.nextLine());
+                            switch (opcionEntradas){
+                                case 1:
+                                    crearEntradas(eventos, id, 7);
+                                break;
+                                case 2:
+                                    crearEntradas(eventos, id, 7);
+                                    crearEntradas(eventos, id, 12);
+                                break;
+                                case 3:
+                                    crearEntradas(eventos, id, 7);
+                                    crearEntradas(eventos, id, 12);
+                                    crearEntradas(eventos, id, 17);
+                                break;
+                                default:
+                                    System.out.println("Inválido.");
+                                break;
                             }
+                            eventos[id][21] = String.valueOf(id);
+                            eventos[id][22] = String.valueOf(idUsuario);
+                            System.out.println("Su evento ha sido creado.");
                         }
                     }
                 break;
