@@ -509,7 +509,7 @@ public class Funciones {
                     }else {
                         for (int i = 0; i < eventos.length; i++) {
                             for (int j = 0; j < eventos[i].length; j++) {
-                                if (eventos[idEvento][21].equals(String.valueOf(opcionEvento))) {
+                                if (eventos[idEvento][21].equals(opcionEvento)) {
                                     verEventoVersionNoDetallada(eventos, idEvento);
                                 }
                             }
@@ -529,18 +529,14 @@ public class Funciones {
                     System.out.print("Introduce la id del evento que deseas editar: ");
                     idEvento = Integer.parseInt(sc.nextLine());
                     crearEditarEvento(eventos, idEvento);
-
+                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][6]));
+                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][11]));
+                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][16]));
                 break;
                 case 3:
                     System.out.print("Introduce la id del evento que deseas eliminar: ");
                     idEvento = Integer.parseInt(sc.nextLine());
-                    for (int i = 0; i < eventos.length; i++) {
-                        for (int j = 0; j < eventos[i].length; j++) {
-                            if (!eventos[i][0].isEmpty()){
-                                eliminarEvento(eventos, idEvento);
-                            }
-                        }
-                    }
+                    eliminarEvento(eventos, idEvento);
                 break;
                 case 0:
                     System.out.println("Saliendo de eventos...");
@@ -871,13 +867,24 @@ public class Funciones {
                     }
                 break;
                 case 2:
+                    int id = -1;
                     for (int i = 0; i < eventos.length; i++) {
-                        for (int j = 0; j < eventos[i].length; j++) {
-                            if (eventos[i][0].isEmpty()){
-                                crearEditarEvento(eventos, idEvento);
-                                crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][6]));
-                                crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][11]));
-                                crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][16]));
+                        if (eventos[i][0] == null) {
+                            id = i;
+                            break;
+                        }
+                    }
+                    if (id == -1) {
+                        System.out.println("No se pueden crear más eventos.");
+                    }else {
+                        for (int i = 0; i < eventos.length; i++) {
+                            for (int j = 0; j < eventos[i].length; j++) {
+                                if (eventos[i][0].isEmpty()){
+                                    crearEditarEvento(eventos, idEvento);
+                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][6]));
+                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][11]));
+                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][16]));
+                                }
                             }
                         }
                     }
@@ -887,12 +894,20 @@ public class Funciones {
                     idEvento = Integer.parseInt(sc.nextLine());
                     for (int i = 0; i < eventos.length; i++) {
                         for (int j = 0; j < eventos[i].length; j++) {
-                            if (!eventos[i][0].isEmpty() && eventos[i][22].equals(usuarios[idEvento][6]));
+                            if (!eventos[i][0].isEmpty() && eventos[i][22].equals(usuarios[i][6]));
+                            crearEditarEvento(eventos, idEvento);
                         }
                     }
                 break;
                 case 4:
-                    eliminarEvento(eventos, idEvento);
+                    System.out.print("Introduce la id del evento que deseas eliminar: ");
+                    idEvento = Integer.parseInt(sc.nextLine());
+                    for (int i = 0; i < eventos.length; i++) {
+                        for (int j = 0; j < eventos[i].length; j++) {
+                            if (!eventos[i][0].isEmpty() && eventos[i][22].equals(usuarios[i][6]));
+                            eliminarEvento(eventos, idEvento);
+                        }
+                    }
                 break;
             }
         }while(opcion != 0);
