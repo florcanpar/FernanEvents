@@ -16,34 +16,36 @@ public class Cadenas {
         return true;
     }
 
-    public static boolean tieneMinuscula(String contrasenia){
-        for (int i = 0; i < contrasenia.length(); i++)
-            if (contrasenia.charAt(i) >= 'a' && contrasenia.charAt(i) <= 'z')
+    public static boolean tieneSimbolo(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z') && !(c >= '0' && c <= '9')) {
                 return true;
+            }
+        }
+        return false;
+    }
+    public static boolean tieneMinuscula(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= 'a' && c <= 'z') return true;
+        }
         return false;
     }
 
-    public static boolean tieneMayuscula(String contrasenia){
-        for (int i = 0; i < contrasenia.length(); i++)
-            if (contrasenia.charAt(i) >= 'A' && contrasenia.charAt(i) <= 'Z')
-                return true;
+    public static boolean tieneMayuscula(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= 'A' && c <= 'Z') return true;
+        }
         return false;
     }
 
-    public static boolean tieneNumero(String contrasenia){
-        for (int i = 0; i < contrasenia.length(); i++)
-            if (contrasenia.charAt(i) >= 1 && contrasenia.charAt(i) <= 9)
-                return true;
+    public static boolean tieneNumero(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') return true;
+        }
         return false;
     }
-
-    public static boolean tieneSimbolo(String contrasenia){
-        for (int i = 0; i < contrasenia.length(); i++)
-            if (contrasenia.charAt(i) == ',' || contrasenia.charAt(i) == '.' || contrasenia.charAt(i) == '@' ||
-                    contrasenia.charAt(i) == '-' || contrasenia.charAt(i) == '_' || contrasenia.charAt(i) == '*' ||
-                    contrasenia.charAt(i) == '+' || contrasenia.charAt(i) == '/')
-                return true;
-        return false;
-    }
-
 }
