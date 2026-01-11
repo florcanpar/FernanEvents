@@ -108,9 +108,7 @@ public class fernanEvents {
 
 
         do {
-            System.out.println("1. Crear usuario");
-            System.out.println("2. Iniciar sesión");
-            System.out.println("3. Salir");
+            mainFernan.utilidades.Funciones.logoFernan();
             System.out.print("Opción: ");
             opcion = Integer.parseInt(sc.nextLine());
 
@@ -128,15 +126,15 @@ public class fernanEvents {
                         switch (rol) {
                             case "ASISTENTE":
                                 mainFernan.utilidades.Funciones.menuAsistenteUsuario(usuarios, eventos, invitados, eventosCompradosAsistente, idUsuario, idEvento);
-                                break;
+                            break;
 
                             case "ORGANIZADOR":
                                 mainFernan.utilidades.Funciones.menuOrganizadorUsuario(usuarios, eventos, idUsuario, idEvento);
-                                break;
+                            break;
 
                             case "ADMIN":
                                 mainFernan.utilidades.Funciones.menuAdministradorUsuario(usuarios, eventos, idUsuario, idEvento);
-                                break;
+                            break;
                         }
                     }
                     break;

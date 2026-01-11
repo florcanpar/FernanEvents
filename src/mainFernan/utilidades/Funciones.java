@@ -39,10 +39,12 @@ public class Funciones {
                        \\____/ \\_/ \\___|_| |_|\\__|___/
                     
                     """ + RESET_COLOR);
-        System.out.println("1. Iniciar sesión");
-        System.out.println("2. Salir");
+        System.out.println("1. Crear usuario");
+        System.out.println("2. Iniciar sesión");
+        System.out.println("3. Salir");
     }
 
+    //MENU ASISTENTE
     public static void menuAsistenteUsuario(String[][] usuarios, String[][] eventos, String[] invitados, String[] eventosComprados,int idAsistente, int idEvento){
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -113,39 +115,36 @@ public class Funciones {
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
-
                 case 1:
-                    System.out.println("¿Qué proyecto quiere ver?");
+                    System.out.println("--- EVENTOS DISPONIBLES ---");
                     for (int i = 0; i < eventos.length; i++) {
-                        for (int j = 0; j < eventos[i].length; j++) {
-                            if (!eventos[i][0].isEmpty()) {
-                                System.out.println(idEvento + ". " + eventos[i][0]);
-                            } else {
-                                System.out.println("Si desea salir escriba 'S'.");
-                            }
+                        if (eventos[i][0] != null) {
+                            System.out.println(i + ". " + eventos[i][0]);
                         }
                     }
+                    System.out.println("Si desea salir escriba 'S'.");
                     System.out.println("Elija una opción: ");
-                    String opcionEvento = sc.nextLine();
+                    String opcionEvento = sc.nextLine().toLowerCase();
 
-                    if (opcionEvento.equals("S")){
+                    if (opcionEvento.equals("s")) {
                         System.out.println("Saliendo. . .");
-                    }else {
-                        for (int i = 0; i < eventos.length; i++) {
-                            for (int j = 0; j < eventos[i].length; j++) {
-                                if (eventos[idEvento][21].equals(String.valueOf(opcionEvento))) {
-                                    verEventoVersionNoDetallada(eventos, idEvento);
-                                }
+                    } else {
+                        int idSeleccionado = Integer.parseInt(opcionEvento);
+
+                        if (idSeleccionado >= 0 && idSeleccionado < eventos.length && eventos[idSeleccionado][0] != null) {
+                            verEventoVersionNoDetallada(eventos, idSeleccionado);
+
+                            System.out.println("¿Quiere ver la versión detallada? (S/N)");
+                            String opcionVersionDetallada = sc.nextLine().toLowerCase();
+
+                            if (opcionVersionDetallada.equals("s")) {
+                                graficoBarras(eventos, idSeleccionado, porcentajeLleno, porcentajeVacio);
+                                verEntradasEventos(eventos, idSeleccionado);
+                            } else {
+                                System.out.println("Saliendo . . .");
                             }
-                        }
-                        System.out.println("¿Quiere ver la versión detallada? (S/N)");
-                        String opcionVersionDetallada = sc.nextLine().toLowerCase();
-                        if (opcionVersionDetallada.equals("S")) {
-                            verEventoVersionNoDetallada(eventos, idEvento);
-                            graficoBarras(eventos, idEvento, porcentajeLleno, porcentajeVacio);
-                            verEntradasEventos(eventos, idEvento);
                         } else {
-                            System.out.println("Saliendo . . .");
+                            System.out.println("Inválido.");
                         }
                     }
                     break;
@@ -271,7 +270,7 @@ public class Funciones {
 
             switch (opcion){
                 case 1:
-                    menuOrganizadorMisEventos(eventos, usuarios, idEvento);
+                    menuOrganizadorMisEventos(eventos, usuarios, idEvento, posicionOrganizador);
                 break;
                 case 2:
                     carteraUsuario(usuarios, posicionOrganizador);
@@ -491,37 +490,35 @@ public class Funciones {
 
             switch (opcion) {
                 case 1:
-                    System.out.println("¿Qué proyecto quiere ver?");
+                    System.out.println("--- EVENTOS DISPONIBLES ---");
                     for (int i = 0; i < eventos.length; i++) {
-                        for (int j = 0; j < eventos[i].length; j++) {
-                            if (!eventos[i][0].isEmpty()) {
-                                System.out.println(idEvento + ". " + eventos[i][0]);
-                            } else {
-                                System.out.println("Si desea salir escriba 'S'.");
-                            }
+                        if (eventos[i][0] != null) {
+                            System.out.println(i + ". " + eventos[i][0]);
                         }
                     }
+                    System.out.println("Si desea salir escriba 'S'.");
                     System.out.println("Elija una opción: ");
-                    String opcionEvento = sc.nextLine();
+                    String opcionEvento = sc.nextLine().toLowerCase();
 
-                    if (opcionEvento.equals("S")){
+                    if (opcionEvento.equals("s")) {
                         System.out.println("Saliendo. . .");
-                    }else {
-                        for (int i = 0; i < eventos.length; i++) {
-                            for (int j = 0; j < eventos[i].length; j++) {
-                                if (eventos[idEvento][21].equals(opcionEvento)) {
-                                    verEventoVersionNoDetallada(eventos, idEvento);
-                                }
+                    } else {
+                        int idSeleccionado = Integer.parseInt(opcionEvento);
+
+                        if (idSeleccionado >= 0 && idSeleccionado < eventos.length && eventos[idSeleccionado][0] != null) {
+                            verEventoVersionNoDetallada(eventos, idSeleccionado);
+
+                            System.out.println("¿Quiere ver la versión detallada? (S/N)");
+                            String opcionVersionDetallada = sc.nextLine().toLowerCase();
+
+                            if (opcionVersionDetallada.equals("s")) {
+                                graficoBarras(eventos, idSeleccionado, porcentajeLleno, porcentajeVacio);
+                                verEntradasEventos(eventos, idSeleccionado);
+                            } else {
+                                System.out.println("Saliendo . . .");
                             }
-                        }
-                        System.out.println("¿Quiere ver la versión detallada? (S/N)");
-                        String opcionVersionDetallada = sc.nextLine().toLowerCase();
-                        if (opcionVersionDetallada.equals("S")) {
-                            verEventoVersionNoDetallada(eventos, idEvento);
-                            graficoBarras(eventos, idEvento, porcentajeLleno, porcentajeVacio);
-                            verEntradasEventos(eventos, idEvento);
                         } else {
-                            System.out.println("Saliendo . . .");
+                            System.out.println("Inválido.");
                         }
                     }
                 break;
@@ -529,9 +526,9 @@ public class Funciones {
                     System.out.print("Introduce la id del evento que deseas editar: ");
                     idEvento = Integer.parseInt(sc.nextLine());
                     crearEditarEvento(eventos, idEvento);
-                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][6]));
-                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][11]));
-                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][16]));
+                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][7]));
+                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][12]));
+                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][17]));
                 break;
                 case 3:
                     System.out.print("Introduce la id del evento que deseas eliminar: ");
@@ -581,14 +578,14 @@ public class Funciones {
         System.out.println("Fecha y Hora: " + evento[idEvento][3]);
         System.out.println("Aforo: " + evento[idEvento][4]);
         System.out.println("Número de inscritos: " + evento[idEvento][5]);
-        if (evento[idEvento][6].isEmpty() && evento[idEvento][14].isEmpty()) {
-            System.out.println("Tipo de entradas: " + evento[idEvento][6]);
-        } else if (evento[idEvento][10].isEmpty() && (!evento[idEvento][14].isEmpty())) {
-            System.out.println("Tipo de entradas: " + evento[idEvento][6] + " y " + evento[idEvento][14]);
-        } else if ((!evento[idEvento][10].isEmpty()) && evento[idEvento][14].isEmpty()) {
-            System.out.println("Tipo de entradas: " + evento[idEvento][6] + " y " + evento[idEvento][10]);
-        } else if ((!evento[idEvento][10].isEmpty()) && (!evento[idEvento][14].isEmpty())) {
-            System.out.println("Tipo de entradas: " + evento[idEvento][6] + ", " + evento[idEvento][10] + " y " + evento[idEvento][14]);
+        if (evento[idEvento][7].isEmpty() && evento[idEvento][12].isEmpty()) {
+            System.out.println("Tipo de entradas: " + evento[idEvento][7]);
+        } else if (evento[idEvento][12].isEmpty() && (!evento[idEvento][17].isEmpty())) {
+            System.out.println("Tipo de entradas: " + evento[idEvento][7] + " y " + evento[idEvento][12]);
+        } else if ((!evento[idEvento][12].isEmpty()) && evento[idEvento][17].isEmpty()) {
+            System.out.println("Tipo de entradas: " + evento[idEvento][7] + " y " + evento[idEvento][12]);
+        } else if ((!evento[idEvento][12].isEmpty()) && (!evento[idEvento][17].isEmpty())) {
+            System.out.println("Tipo de entradas: " + evento[idEvento][7] + ", " + evento[idEvento][12] + " y " + evento[idEvento][12]);
         }
     }
 
@@ -626,6 +623,7 @@ public class Funciones {
                     }
                 }
                 System.out.println("Inicio de sesión correcto");
+                System.out.println("Tu id es " + usuarios[i][6]);
                 return i;
             }
         }
@@ -793,6 +791,8 @@ public class Funciones {
             eventos[idEvento][3] = sc.nextLine();
             System.out.println("Inserte un aforo máximo para su evento: ");
             eventos[idEvento][4] = sc.nextLine();
+            eventos[idEvento][5] = "0";
+            eventos[idEvento][5] = "0";
         }
     }
 
@@ -823,8 +823,8 @@ public class Funciones {
             System.out.println("Su evento ha sido eliminado correctamente.");
         }
     }
-
-    public static void menuOrganizadorMisEventos(String[][] eventos, String[][] usuarios, int idEvento){
+    //MENU ORGANIZADOR
+    public static void menuOrganizadorMisEventos(String[][] eventos, String[][] usuarios, int idEvento, int idUsuario){
         Scanner sc = new Scanner(System.in);
         final String VERDE = "\u001B[32m";
         final String BLANCO = "\u001B[37m";
@@ -832,38 +832,57 @@ public class Funciones {
         String porcentajeVacio = "█" + BLANCO;
         int opcion;
         do {
+            menuOrganizadorEventos();
             System.out.println("Elija una opción: ");
             opcion = Integer.parseInt(sc.nextLine());
             switch (opcion){
                 case 1:
+                    System.out.println("Indique su ID de usuario: ");
+                    idUsuario = Integer.parseInt(sc.nextLine());
+
                     System.out.println("¿Qué proyecto quiere ver?");
-                    for (int i = 0; i < eventos.length; i++) {
-                        for (int j = 0; j < eventos[i].length; j++) {
-                            if (!eventos[i][0].isEmpty() && eventos[i][22].equals(usuarios[idEvento][6])) {
-                                System.out.println(idEvento + ". " + eventos[i][0]);
-                            } else {
-                                System.out.println("0. Salir.");
-                            }
-                        }
-                    }
-                    System.out.println("Elija una opción: ");
-                    int opcionEvento = Integer.parseInt(sc.nextLine());
 
                     for (int i = 0; i < eventos.length; i++) {
-                        for (int j = 0; j < eventos[i].length; j++) {
-                            if (eventos[idEvento][21].equals(String.valueOf(opcionEvento))) {
-                                verEventoVersionNoDetallada(eventos, idEvento);
+                        if (eventos[i] != null && eventos[i][0] != null) {
+                            if (eventos[i][22].equals(String.valueOf(idUsuario))) {
+                                System.out.println(eventos[i][21] + ". " + eventos[i][0]);
                             }
                         }
                     }
-                    System.out.println("¿Quiere ver la versión detallada? (S/N)");
-                    String opcionVersionDetallada = sc.nextLine().toLowerCase();
-                    if (opcionVersionDetallada.equals("S")) {
-                        verEventoVersionNoDetallada(eventos, idEvento);
-                        graficoBarras(eventos, idEvento, porcentajeLleno, porcentajeVacio);
-                        verEntradasEventos(eventos, idEvento);
+                    System.out.println("Si desea salir escriba 'S'.");
+                    System.out.print("Elija una opción: ");
+                    String opcionEvento = sc.nextLine();
+
+                    if (opcionEvento.equals("S") || opcionEvento.equals("s")) {
+                        System.out.println("Saliendo. . .");
                     } else {
-                        System.out.println("Saliendo . . .");
+                        int indiceEncontrado = -1;
+
+                        for (int i = 0; i < eventos.length; i++) {
+                            if (eventos[i] != null && eventos[i][0] != null) {
+                                if (eventos[i][21].equals(opcionEvento)) {
+                                    if (eventos[i][22].equals(String.valueOf(idUsuario))) {
+                                        indiceEncontrado = i;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (indiceEncontrado != -1) {
+                            verEventoVersionNoDetallada(eventos, indiceEncontrado);
+
+                            System.out.println("¿Quiere ver la versión detallada? (S/N)");
+                            String opcionVersionDetallada = sc.nextLine();
+
+                            if (opcionVersionDetallada.equals("S") || opcionVersionDetallada.equals("s")) {
+                                graficoBarras(eventos, indiceEncontrado, porcentajeLleno, porcentajeVacio);
+                                verEntradasEventos(eventos, indiceEncontrado);
+                            } else {
+                                System.out.println("Saliendo . . .");
+                            }
+                        } else {
+                            System.out.println("ID no válido o no tienes permiso para verlo.");
+                        }
                     }
                 break;
                 case 2:
@@ -881,9 +900,9 @@ public class Funciones {
                             for (int j = 0; j < eventos[i].length; j++) {
                                 if (eventos[i][0].isEmpty()){
                                     crearEditarEvento(eventos, idEvento);
-                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][6]));
-                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][11]));
-                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][16]));
+                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][7]));
+                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][12]));
+                                    crearEntradas(eventos, idEvento, Integer.parseInt(eventos[idEvento][17]));
                                 }
                             }
                         }
@@ -914,12 +933,12 @@ public class Funciones {
     }
 
     public static void verEntradasEventos(String[][] eventos, int idEvento){
-        if (!eventos[idEvento][6].isEmpty()){
-            entradasDetalladas(eventos, idEvento, Integer.parseInt(eventos[idEvento][6]));
-        }else if (!eventos[idEvento][11].isEmpty()){
-            entradasDetalladas(eventos, idEvento, Integer.parseInt(eventos[idEvento][11]));
-        } else if (!eventos[idEvento][16].isEmpty()) {
-            entradasDetalladas(eventos, idEvento, Integer.parseInt(eventos[idEvento][16]));
+        if (!(eventos[idEvento][7] == null)){
+            entradasDetalladas(eventos, idEvento, Integer.parseInt(eventos[idEvento][7]));
+        }else if (!(eventos[idEvento][12] == null)){
+            entradasDetalladas(eventos, idEvento, Integer.parseInt(eventos[idEvento][12]));
+        } else if (!(eventos[idEvento][17] == null)) {
+            entradasDetalladas(eventos, idEvento, Integer.parseInt(eventos[idEvento][17]));
         }
     }
 
