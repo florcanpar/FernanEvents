@@ -43,7 +43,7 @@ public class Funciones {
         System.out.println("2. Salir");
     }
 
-    public static void menuAsistenteUsuario(String[][] usuarios, String[][] eventos, String[] invitados ,int posAsistente){
+    public static void menuAsistenteUsuario(String[][] usuarios, String[][] eventos, String[] invitados, String[] eventosComprados,int idAsistente, int idEvento){
         Scanner sc = new Scanner(System.in);
         int opcion;
 
@@ -54,23 +54,23 @@ public class Funciones {
 
             switch (opcion){
                 case 1:
-                    //misEventos();
+                    misEventos(eventosComprados, idAsistente);
                     break;
 
                 case 2:
-                    // verEventos();
+                    menuEventosAsistente(usuarios, eventos, eventosComprados, idAsistente, idEvento);
                     break;
 
                 case 3:
-                    carteraUsuario(usuarios, posAsistente);
+                    carteraUsuario(usuarios, idAsistente);
                     break;
 
                 case 4:
-                    invitarAmigos(invitados, posAsistente);
+                    invitarAmigos(invitados, idAsistente);
                     break;
 
                 case 5:
-                    configuracionUsuario(usuarios, posAsistente);
+                    configuracionUsuario(usuarios, idAsistente);
                     break;
 
                 case 0:
@@ -85,6 +85,145 @@ public class Funciones {
         }while (opcion != 0);
 
     }
+
+    public static void misEventos(String[] eventosComprados, int idUsuario) {
+
+        if (eventosComprados[idUsuario] == null) {
+            System.out.println("No has comprado entradas aún");
+        } else {
+            System.out.println("--- MIS EVENTOS ---");
+            System.out.println(eventosComprados[idUsuario]);
+        }
+    }
+
+    public static void menuEventosAsistente(String[][] usuarios, String[][] eventos, String[] eventosComprados, int posAsistente, int idEvento) {
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+        final String VERDE = "\u001B[32m";
+        final String BLANCO = "\u001B[37m";
+        String porcentajeLleno = "█" + VERDE;
+        String porcentajeVacio = "█" + BLANCO;
+
+        do {
+            System.out.println("--- EVENTOS ---");
+            System.out.println("1. Ver eventos");
+            System.out.println("2. Comprar entrada");
+            System.out.println("0. Salir");
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+
+                case 1:
+                    System.out.println("¿Qué proyecto quiere ver?");
+                    for (int i = 0; i < eventos.length; i++) {
+                        for (int j = 0; j < eventos[i].length; j++) {
+                            if (!eventos[i][0].isEmpty()) {
+                                System.out.println(idEvento + ". " + eventos[i][0]);
+                            } else {
+                                System.out.println("Si desea salir escriba 'S'.");
+                            }
+                        }
+                    }
+                    System.out.println("Elija una opción: ");
+                    String opcionEvento = sc.nextLine();
+
+                    if (opcionEvento.equals("S")){
+                        System.out.println("Saliendo. . .");
+                    }else {
+                        for (int i = 0; i < eventos.length; i++) {
+                            for (int j = 0; j < eventos[i].length; j++) {
+                                if (eventos[idEvento][21].equals(String.valueOf(opcionEvento))) {
+                                    verEventoVersionNoDetallada(eventos, idEvento);
+                                }
+                            }
+                        }
+                        System.out.println("¿Quiere ver la versión detallada? (S/N)");
+                        String opcionVersionDetallada = sc.nextLine().toLowerCase();
+                        if (opcionVersionDetallada.equals("S")) {
+                            verEventoVersionNoDetallada(eventos, idEvento);
+                            graficoBarras(eventos, idEvento, porcentajeLleno, porcentajeVacio);
+                            verEntradasEventos(eventos, idEvento);
+                        } else {
+                            System.out.println("Saliendo . . .");
+                        }
+                    }
+                    break;
+
+                case 2:
+                    comprarEntrada(usuarios, eventos, eventosComprados, posAsistente);
+                    break;
+
+                case 0:
+                    System.out.println("Saliendo de eventos...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida");
+            }
+
+        } while (opcion != 0);
+    }
+
+    public static void comprarEntrada(String[][] usuarios, String[][] eventos, String[] eventosComprados, int posAsistente) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Desea comprar una entrada? (s/n): ");
+        String confirmar = sc.nextLine().toLowerCase();
+
+        if (!confirmar.equals("s")) {
+            System.out.println("Compra cancelada");
+            return;
+        }
+
+        System.out.print("ID del evento: ");
+        int idEvento = Integer.parseInt(sc.nextLine());
+
+        if (idEvento == -1 || idEvento < 0 || idEvento >= eventos.length || eventos[idEvento][0] == null) {
+            System.out.println("Saliendo...");
+            return;
+        }
+
+        System.out.print("ID de la entrada: ");
+        int idEntrada = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Cantidad de entradas: ");
+        int cantidad = Integer.parseInt(sc.nextLine());
+
+        double precio = Double.parseDouble(eventos[idEvento][idEntrada + 4]);
+        double total = precio * cantidad;
+
+        double saldo = Double.parseDouble(usuarios[posAsistente][5]);
+
+        if (saldo < total) {
+            System.out.println("Saldo insuficiente");
+            return;
+        }
+
+        usuarios[posAsistente][5] = String.valueOf(saldo - total);
+        double organizadorParte = total * 0.90;
+        double adminParte = total * 0.10;
+        int posOrganizador = Integer.parseInt(eventos[idEvento][1]);
+
+        usuarios[posOrganizador][5] =
+                String.valueOf(Double.parseDouble(usuarios[posOrganizador][5]) + organizadorParte);
+
+        for (int i = 0; i < usuarios.length; i++) {
+            if (usuarios[i][0] != null && usuarios[i][2].equals("ADMIN")) {
+                usuarios[i][5] =
+                        String.valueOf(Double.parseDouble(usuarios[i][5]) + adminParte);
+                break;
+            }
+        }
+
+        if (eventosComprados[posAsistente] == null) {
+            eventosComprados[posAsistente] = "";
+        }
+        eventosComprados[posAsistente] += eventos[idEvento][0] + "\n";
+
+        System.out.println("Compra realizada");
+    }
+
 
     public static void invitarAmigos(String[] invitados, int posicionUsuario){
         Scanner sc = new Scanner(System.in);
