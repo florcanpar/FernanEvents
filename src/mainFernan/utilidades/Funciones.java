@@ -295,7 +295,6 @@ public class Funciones {
     }
 
 
-
     //EVENTOS
     public static void graficoBarras(String inscritosProyectos, String aforoProyecto, String porcentajeLleno, String porcentajeVacio){
         int formulaGrafico = (100 * Integer.parseInt(inscritosProyectos)) / Integer.parseInt(aforoProyecto);
