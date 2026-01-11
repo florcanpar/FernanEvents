@@ -94,15 +94,15 @@ public class Funciones {
      * el organizador pueda elegir cuál quiere ver.
      * @param evento
      * @param usuario
-     * @param fila
+     * @param idEvento
      */
 
-    public static void verEventosCreadosOrganizador(String[][] evento, String[][] usuario, int fila) {
+    public static void verEventosCreadosOrganizador(String[][] evento, String[][] usuario, int idEvento) {
         int contador = 0;
         System.out.println("¿Qué proyecto quiere ver?");
         for (int i = 0; i < evento.length; i++) {
             for (int j = 0; j < evento[i].length; j++) {
-                if (!evento[i][0].isEmpty() && evento[i][20].equals(usuario[fila][6])) {
+                if (!evento[i][0].isEmpty() && evento[i][22].equals(usuario[idEvento][6])) {
                     contador++;
                     System.out.println(contador + evento[i][0]);
                 } else {
@@ -112,21 +112,21 @@ public class Funciones {
         }
     }
 
-    public static void verEventoVersionNoDetallada(String[][] evento, int fila) {
-        System.out.println("Nombre: " + evento[fila][0]);
-        System.out.println("Descripción: " + evento[fila][1]);
-        System.out.println("Categoría: " + evento[fila][2]);
-        System.out.println("Fecha y Hora: " + evento[fila][3]);
-        System.out.println("Aforo: " + evento[fila][4]);
-        System.out.println("Número de inscritos: " + evento[fila][5]);
-        if (evento[fila][6].isEmpty() && evento[fila][14].isEmpty()) {
-            System.out.println("Tipo de entradas: " + evento[fila][6]);
-        } else if (evento[fila][10].isEmpty() && (!evento[fila][14].isEmpty())) {
-            System.out.println("Tipo de entradas: " + evento[fila][6] + " y " + evento[fila][14]);
-        } else if ((!evento[fila][10].isEmpty()) && evento[fila][14].isEmpty()) {
-            System.out.println("Tipo de entradas: " + evento[fila][6] + " y " + evento[fila][10]);
-        } else if ((!evento[fila][10].isEmpty()) && (!evento[fila][14].isEmpty())) {
-            System.out.println("Tipo de entradas: " + evento[fila][6] + ", " + evento[fila][10] + " y " + evento[fila][14]);
+    public static void verEventoVersionNoDetallada(String[][] evento, int idEvento) {
+        System.out.println("Nombre: " + evento[idEvento][0]);
+        System.out.println("Descripción: " + evento[idEvento][1]);
+        System.out.println("Categoría: " + evento[idEvento][2]);
+        System.out.println("Fecha y Hora: " + evento[idEvento][3]);
+        System.out.println("Aforo: " + evento[idEvento][4]);
+        System.out.println("Número de inscritos: " + evento[idEvento][5]);
+        if (evento[idEvento][6].isEmpty() && evento[idEvento][14].isEmpty()) {
+            System.out.println("Tipo de entradas: " + evento[idEvento][6]);
+        } else if (evento[idEvento][10].isEmpty() && (!evento[idEvento][14].isEmpty())) {
+            System.out.println("Tipo de entradas: " + evento[idEvento][6] + " y " + evento[idEvento][14]);
+        } else if ((!evento[idEvento][10].isEmpty()) && evento[idEvento][14].isEmpty()) {
+            System.out.println("Tipo de entradas: " + evento[idEvento][6] + " y " + evento[idEvento][10]);
+        } else if ((!evento[idEvento][10].isEmpty()) && (!evento[idEvento][14].isEmpty())) {
+            System.out.println("Tipo de entradas: " + evento[idEvento][6] + ", " + evento[idEvento][10] + " y " + evento[idEvento][14]);
         }
     }
 
@@ -295,8 +295,8 @@ public class Funciones {
 
 
     //EVENTOS
-    public static void graficoBarras(String inscritosProyectos, String aforoProyecto, String porcentajeLleno, String porcentajeVacio){
-        int formulaGrafico = (100 * Integer.parseInt(inscritosProyectos)) / Integer.parseInt(aforoProyecto);
+    public static void graficoBarras(String[][] eventos, int idEvento, String porcentajeLleno, String porcentajeVacio){
+        int formulaGrafico = (100 * Integer.parseInt(eventos[idEvento][5])) / Integer.parseInt(eventos[idEvento][4]);
         final String RESET_COLOR = "\u001B[0m";
         System.out.print(formulaGrafico + "% [");
         for (int i = 0; i < 100; i++) {
@@ -309,48 +309,47 @@ public class Funciones {
         System.out.print("]" + RESET_COLOR);
     }
 
-    public static void entradasDetalladas(String tipo, String descripcion, String numeroEntrada, String precioEntrada){
-        System.out.println("Tipo de entrada " + tipo + ": ");
-        System.out.println("Descripción: " + descripcion);
-        System.out.println("Número de entradas: " + numeroEntrada);
-        System.out.println("Precio: " + precioEntrada + "€.");
+    public static void entradasDetalladas(String[][] eventos, int idEvento, int idEntrada){
+        System.out.println("Nombre de entrada " + eventos[idEvento][idEntrada+1] + ": ");
+        System.out.println("Descripción: " + eventos[idEvento][idEntrada+2]);
+        System.out.println("Número de entradas: " + eventos[idEvento][idEntrada+3]);
+        System.out.println("Precio: " + eventos[idEvento][idEntrada+4] + "€.");
     }
 
     public static void crearEditarEvento(String[][] eventos, int idEvento){
         Scanner sc = new Scanner(System.in);
         System.out.println("Inserte un nombre para su evento: ");
-        String nombre = sc.nextLine();
-        if (nombre.isEmpty()){
+        eventos[idEvento][0] = sc.nextLine();
+        if (eventos[idEvento][0].isEmpty()){
             System.out.println("Debe insertar un nombre de evento obligatoriamente.");
         } else {
             System.out.println("Inserte una descripción para su evento: ");
-            String descripcion = sc.nextLine();
+            eventos[idEvento][1] = sc.nextLine();
             System.out.println("Inserte una categoría para su evento: ");
-            String categoria = sc.nextLine();
+            eventos[idEvento][2] = sc.nextLine();
             System.out.println("Inserte una fecha (DD/MM/AAAA) y hora (HH:MM) para su evento: ");
-            String fechaYHora = sc.nextLine();
+            eventos[idEvento][3] = sc.nextLine();
             System.out.println("Inserte un aforo máximo para su evento: ");
-            String aforo = sc.nextLine();
-            System.out.println("¿Cuántos tipos de entradas vas a ofrecer? (1, 2 o 3)");
-            int opcionEntradas = Integer.parseInt(sc.nextLine());
+            eventos[idEvento][4] = sc.nextLine();
         }
     }
 
-    public static void crearEntradas(String[][] eventos, int idEvento){
+    public static void crearEntradas(String[][] eventos, int idEvento, int idEntrada){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Inserte un tipo de entrada: ");
-        String tipo = sc.nextLine();
-        while (tipo.isEmpty()) {
-            System.out.println("La entrada tiene que tener un nombre.");
-            System.out.println("Inserte un tipo de entrada: ");
-            tipo = sc.nextLine();
-        }
+        System.out.println("Inserte el nombre de la entrada: ");
+        eventos[idEvento][idEntrada+1] = sc.nextLine();
+        do {
+            System.out.println("Inserte el nombre de la entrada: ");
+            eventos[idEvento][idEntrada+1] = sc.nextLine();
+            if (eventos[idEvento][idEntrada+1].isEmpty()) System.out.println("La entrada tiene que tener un nombre.");
+        } while (eventos[idEvento][idEntrada+1].isEmpty());
+
         System.out.println("Inserte una descripción para este tipo de entrada:");
-        String descripcion = sc.nextLine();
-        System.out.println("Inserte un número de entradas para las entradas: ");
-        String existencias = sc.nextLine();
+        eventos[idEvento][idEntrada+2] = sc.nextLine();
+        System.out.println("Inserte el número de entradas existentes: ");
+        eventos[idEvento][idEntrada+3] = sc.nextLine();
         System.out.println("Inserte un precio para este tipo de entrada: ");
-        String precio = sc.nextLine();
+        eventos[idEvento][idEntrada+4] = sc.nextLine();
     }
 
     public static void eliminarEvento(String[][] eventos, int idEvento){

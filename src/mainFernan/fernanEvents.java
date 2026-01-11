@@ -45,47 +45,53 @@ public class fernanEvents {
         // [i][3] -> fecha y hora
         // [i][4] -> aforo
         // [i][5] -> inscritos
-        // [i][6] -> tipo de entrada 1
-        // [i][7] -> entrada 1 descripción
-        // [i][8] -> entrada 1 existencias
-        // [i][9] -> entrada 1 precio
-        // [i][10] -> tipo de entrada 2
-        // [i][11] -> entrada 2 descripción
-        // [i][12] -> entrada 2 existencias
-        // [i][13] -> entrada 2 precio
-        // [i][14] -> tipo de entrada 3
-        // [i][15] -> entrada 3 descripción
-        // [i][16] -> entrada 3 existencias
-        // [i][17] -> entrada 3 precio
-        // [i][18] -> id evento que pone automáticamente el programa
-        // [i][19] -> id del organizador que ha creado el evento
+        // [i][6] -> id entrada 1 (6)
+        // [i][7] -> nombre de entrada 1
+        // [i][8] -> entrada 1 descripción
+        // [i][9] -> entrada 1 existencias
+        // [i][10] -> entrada 1 precio
+        // [i][11] -> id entrada 2 (11)
+        // [i][12] -> tipo de entrada 2
+        // [i][13] -> entrada 2 descripción
+        // [i][14] -> entrada 2 existencias
+        // [i][15] -> entrada 2 precio
+        // [i][16] -> id entrada 3 (16)
+        // [i][17] -> tipo de entrada 3
+        // [i][18] -> entrada 3 descripción
+        // [i][19] -> entrada 3 existencias
+        // [i][20] -> entrada 3 precio
+        // [i][21] -> id evento que pone automáticamente el programa
+        // [i][22] -> id del organizador que ha creado el evento
 
         // [0][j] -> evento 1
         // [1][j] -> evento 2
         // [2][j] -> evento 3
         // etc...
 
-        String[][] eventos = new String[19][20];
+        String[][] eventos = new String[19][22];
         eventos[0][0] = "Prueba";
         eventos[0][1] = "Una prueba para comprobar que todo funciona correctamente.";
         eventos[0][2] = "Arte.";
         eventos[0][3] = "18/11/2025 a las 16:00.";
         eventos[0][4] = "20";
         eventos[0][5] = "5";
-        eventos[0][6] = "Pista";
-        eventos[0][7] = "La pista para los pobres.";
-        eventos[0][8] = "200";
-        eventos[0][9] = "70";
-        eventos[0][10] = "Asiento";
-        eventos[0][11] = "Los asientos para la clase media.";
-        eventos[0][12] = "100";
-        eventos[0][13] = "100";
-        eventos[0][14] = "VIP";
-        eventos[0][15] = "VIP pa los chulos.";
-        eventos[0][16] = "20";
-        eventos[0][17] = "200";
-        eventos[0][18] = "0";
-        eventos[0][19] = "101";
+        eventos[0][6] = "6";
+        eventos[0][7] = "Pista";
+        eventos[0][8] = "La pista para los pobres.";
+        eventos[0][9] = "200";
+        eventos[0][10] = "70";
+        eventos[0][11] = "11";
+        eventos[0][12] = "Asientos";
+        eventos[0][13] = "Asientos para la clase media.";
+        eventos[0][14] = "100";
+        eventos[0][15] = "100";
+        eventos[0][16] = "16";
+        eventos[0][17] = "VIP";
+        eventos[0][18] = "VIP pa los chulos.";
+        eventos[0][19] = "20";
+        eventos[0][20] = "200";
+        eventos[0][21] = "0";
+        eventos[0][22] = "101";
 
 
 
