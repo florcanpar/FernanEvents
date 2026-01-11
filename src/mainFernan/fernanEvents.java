@@ -96,6 +96,7 @@ public class fernanEvents {
         eventos[0][22] = "101";
 
 
+        String[] invitados = new String[10];
 
         int eleccionUsuario;
         int usuarioRegistrado = -1;

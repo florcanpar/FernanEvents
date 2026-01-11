@@ -43,7 +43,7 @@ public class Funciones {
         System.out.println("2. Salir");
     }
 
-    public static void menuAsistenteUsuario(String[][] usuarios, String[][] eventos, int posAsistente){
+    public static void menuAsistenteUsuario(String[][] usuarios, String[][] eventos, String[] invitados ,int posAsistente){
         Scanner sc = new Scanner(System.in);
         int opcion;
 
@@ -66,7 +66,7 @@ public class Funciones {
                     break;
 
                 case 4:
-                    // invitarAmigo();
+                    invitarAmigos(invitados, posAsistente);
                     break;
 
                 case 5:
@@ -86,6 +86,30 @@ public class Funciones {
 
     }
 
+    public static void invitarAmigos(String[] invitados, int posicionUsuario){
+        Scanner sc = new Scanner(System.in);
+
+        String nombre, opcion;
+
+        if (invitados[posicionUsuario] == null){
+            invitados[posicionUsuario] = "";
+        }
+
+        do {
+            System.out.println("A q amigo quieres invitar?");
+            nombre = sc.nextLine();
+
+            invitados[posicionUsuario] += nombre + "\n";
+
+            System.out.println("Quieres invitar a otro amigo?");
+            opcion = sc.nextLine().toLowerCase();
+        }while (opcion.equals("si"));
+
+        System.out.println("--- LISTA DE AMIGOS ---");
+        System.out.println(invitados[posicionUsuario]);
+    }
+
+
     public static void menuAsistente(){
         final String MORADO = "\u001B[35m";
         final String RESET_COLOR = "\u001B[0m";
@@ -99,7 +123,7 @@ public class Funciones {
         System.out.println("0. Cerrar Sesión");
     }
 
-    public static void menuOrganizadorUsuario(String[][] usuarios, String[][] eventos, int posOrganizador){
+    public static void menuOrganizadorUsuario(String[][] usuarios, String[][] eventos, int posicionOrganizador){
         Scanner sc = new Scanner(System.in);
         int opcion;
 
@@ -114,11 +138,11 @@ public class Funciones {
                     break;
 
                 case 2:
-                    carteraUsuario(usuarios, posOrganizador);
+                    carteraUsuario(usuarios, posicionOrganizador);
                     break;
 
                 case 3:
-                    configuracionUsuario(usuarios, posOrganizador);
+                    configuracionUsuario(usuarios, posicionOrganizador);
                     break;
 
                 case 0:
@@ -155,7 +179,7 @@ public class Funciones {
         System.out.println("5. Salir.");
     }
 
-    public static void menuAdministradorUsuario(String[][] usuarios, String[][] eventos, int posAdmin){
+    public static void menuAdministradorUsuario(String[][] usuarios, String[][] eventos, int posicionAdmin){
         Scanner sc = new Scanner(System.in);
         int opcion;
 
@@ -174,11 +198,11 @@ public class Funciones {
                     break;
 
                 case 3:
-                    carteraUsuario(usuarios, posAdmin);
+                    carteraUsuario(usuarios, posicionAdmin);
                     break;
 
                 case 4:
-                    configuracionUsuario(usuarios, posAdmin);
+                    configuracionUsuario(usuarios, posicionAdmin);
                     break;
 
                 case 0:
@@ -242,7 +266,7 @@ public class Funciones {
         } while (opcion != 0);
     }
 
-    public static void configuracionUsuario(String[][] usuarios, int posUsuario) {
+    public static void configuracionUsuario(String[][] usuarios, int posicionUsuario) {
 
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -272,7 +296,7 @@ public class Funciones {
                     if (existe) {
                         System.out.println("Ese nombre de usuario ya existe");
                     } else {
-                        usuarios[posUsuario][0] = nuevoNombre;
+                        usuarios[posicionUsuario][0] = nuevoNombre;
                         System.out.println("Nombre de usuario cambiado correctamente");
                     }
                     break;
@@ -281,7 +305,7 @@ public class Funciones {
                     System.out.print("Contraseña actual: ");
                     String passActual = sc.nextLine();
 
-                    if (!Cadenas.contraseniaSonIguales(passActual, usuarios[posUsuario][1])) {
+                    if (!Cadenas.contraseniaSonIguales(passActual, usuarios[posicionUsuario][1])) {
                         System.out.println("Contraseña incorrecta");
                         break;
                     }
@@ -302,7 +326,7 @@ public class Funciones {
                         break;
                     }
 
-                    usuarios[posUsuario][1] = nuevaContrasenia;
+                    usuarios[posicionUsuario][1] = nuevaContrasenia;
                     System.out.println("Contraseña cambiada correctamente");
                     break;
 
@@ -454,7 +478,7 @@ public class Funciones {
         return usuarios[posicionUsuario][3].equals("true");
     }
 
-    public static void usuarioValidado(String[][] usuarios, int pos) {
+    public static void usuarioValidado(String[][] usuarios, int posicion) {
         Scanner sc = new Scanner(System.in);
 
         String codigo = String.valueOf(TokenAleatorio.tokenAleatorio());
@@ -471,7 +495,7 @@ public class Funciones {
             String codigoUsuario = sc.nextLine();
 
             if (codigoUsuario.equals(codigo)) {
-                usuarios[pos][4] = "true";
+                usuarios[posicion][4] = "true";
                 System.out.println("Usuario validado con éxito");
                 return;
             } else {
@@ -480,13 +504,13 @@ public class Funciones {
             }
         }
 
-        usuarios[pos][3] = "true";
+        usuarios[posicion][3] = "true";
         System.out.println("Usuario bloqueado por seguridad");
     }
 
-    public static void carteraUsuario(String[][] usuarios, int pos) {
+    public static void carteraUsuario(String[][] usuarios, int posicion) {
         Scanner sc = new Scanner(System.in);
-        double cartera = Double.parseDouble(usuarios[pos][5]);
+        double cartera = Double.parseDouble(usuarios[posicion][5]);
         int opcion;
 
         do {
@@ -514,7 +538,7 @@ public class Funciones {
 
         } while (opcion != 3);
 
-        usuarios[pos][5] = String.valueOf(cartera);
+        usuarios[posicion][5] = String.valueOf(cartera);
     }
 
     public static void crearUsuario(String[][] usuarios) {
