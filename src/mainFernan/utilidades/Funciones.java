@@ -167,7 +167,6 @@ public class Funciones {
                 return i;
             }
         }
-
         System.out.println("El usuario no existe");
         return -1;
     }
@@ -317,7 +316,7 @@ public class Funciones {
         System.out.println("Precio: " + precioEntrada + "€.");
     }
 
-    public static void crearEditarEvento(){
+    public static void crearEditarEvento(String[][] eventos, int idEvento){
         Scanner sc = new Scanner(System.in);
         System.out.println("Inserte un nombre para su evento: ");
         String nombre = sc.nextLine();
@@ -337,7 +336,7 @@ public class Funciones {
         }
     }
 
-    public static void crearEntradas(){
+    public static void crearEntradas(String[][] eventos, int idEvento){
         Scanner sc = new Scanner(System.in);
         System.out.println("Inserte un tipo de entrada: ");
         String tipo = sc.nextLine();
@@ -354,21 +353,12 @@ public class Funciones {
         String precio = sc.nextLine();
     }
 
-    public static void eliminarEvento(String nombre, String descripcion, String categoria, String fechaYHora, String aforo, String inscritos, String idEvento){
-        nombre = "";
-        descripcion = "";
-        categoria = "";
-        fechaYHora = "";
-        aforo = "";
-        inscritos = "";
-        idEvento = "";
-    }
-
-    public static void eliminarEntradas(String tipo, String descripcion, String existencias, String precio){
-        tipo = "";
-        descripcion = "";
-        existencias = "";
-        precio = "";
+    public static void eliminarEvento(String[][] eventos, int idEvento){
+        for (int i = 0; i < eventos.length; i++) {
+            for (int j = 0; j < eventos[i].length; j++) {
+                eventos[idEvento][j] = "";
+            }
+        }
     }
 
 }

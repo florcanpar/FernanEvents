@@ -84,7 +84,7 @@ public class fernanEvents {
         eventos[0][15] = "VIP pa los chulos.";
         eventos[0][16] = "20";
         eventos[0][17] = "200";
-        eventos[0][18] = "1000";
+        eventos[0][18] = "0";
         eventos[0][19] = "101";
 
 
