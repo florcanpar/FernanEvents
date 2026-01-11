@@ -176,41 +176,59 @@ public class Funciones {
         }
 
         System.out.print("ID del evento: ");
-        int idEvento = Integer.parseInt(sc.nextLine());
+        String idEventoUsuario = sc.nextLine();
+        if (!esNumero(idEventoUsuario)) {
+            System.out.println("Error: El ID del evento debe ser un número.");
+            return;
+        }
+        int idEvento = Integer.parseInt(idEventoUsuario);
 
-        if (idEvento == -1 || idEvento < 0 || idEvento >= eventos.length || eventos[idEvento][0] == null) {
-            System.out.println("Saliendo...");
+        if (idEvento < 0 || idEvento >= eventos.length || eventos[idEvento][0] == null) {
+            System.out.println("Evento no encontrado.");
             return;
         }
 
         System.out.print("ID de la entrada (6 para la primera, 12 para la segunda y 17 para la tercera): ");
-        int idEntrada = Integer.parseInt(sc.nextLine());
+        String idEntradaUsuario = sc.nextLine();
+        if (!esNumero(idEntradaUsuario)) {
+            System.out.println("Error: La opción de entrada debe ser un número.");
+            return;
+        }
+        int idEntradaColumna = Integer.parseInt(idEntradaUsuario);
 
         System.out.print("Cantidad de entradas: ");
-        int cantidad = Integer.parseInt(sc.nextLine());
+        String cantidadEntradasUsuario = sc.nextLine();
+        if (!esNumero(cantidadEntradasUsuario)) {
+            System.out.println("Error: La cantidad debe ser un número.");
+            return;
+        }
+        int cantidad = Integer.parseInt(cantidadEntradasUsuario);
 
-        double precio = Double.parseDouble(eventos[idEvento][idEntrada + 4]);
+        double precio = Double.parseDouble(eventos[idEvento][idEntradaColumna + 4]);
         double total = precio * cantidad;
 
-        double saldo = Double.parseDouble(usuarios[posAsistente][5]);
-
-        if (saldo < total) {
-            System.out.println("Saldo insuficiente");
+        double saldoAsistente = Double.parseDouble(usuarios[posAsistente][5]);
+        if (saldoAsistente < total) {
+            System.out.println("Saldo insuficiente. Tienes " + saldoAsistente + "€ y el total es " + total + "€.");
             return;
         }
 
-        usuarios[posAsistente][5] = String.valueOf(saldo - total);
-        double organizadorParte = total * 0.90;
-        double adminParte = total * 0.10;
-        int posOrganizador = Integer.parseInt(eventos[idEvento][1]);
+        usuarios[posAsistente][5] = String.valueOf(saldoAsistente - total);
 
-        usuarios[posOrganizador][5] =
-                String.valueOf(Double.parseDouble(usuarios[posOrganizador][5]) + organizadorParte);
+        double parteOrganizador = total * 0.90;
+        for (int i = 0; i < usuarios.length; i++) {
+            if (usuarios[i][0] != null && usuarios[i][2].equals("ORGANIZADOR")) {
+                double saldoAd = Double.parseDouble(usuarios[i][5]);
+                usuarios[i][5] = String.valueOf(saldoAd + parteOrganizador);
+                break;
+            }
+        }
 
+        double parteAdmin = total * 0.10;
         for (int i = 0; i < usuarios.length; i++) {
             if (usuarios[i][0] != null && usuarios[i][2].equals("ADMIN")) {
-                usuarios[i][5] =
-                        String.valueOf(Double.parseDouble(usuarios[i][5]) + adminParte);
+                double saldoAd = Double.parseDouble(usuarios[i][5]);
+                usuarios[i][5] = String.valueOf(saldoAd + parteAdmin);
                 break;
             }
         }
@@ -220,7 +238,20 @@ public class Funciones {
         }
         eventosComprados[posAsistente] += eventos[idEvento][0] + "\n";
 
-        System.out.println("Compra realizada");
+        System.out.println("Compra realizada con éxito.");
+    }
+
+    public static boolean esNumero(String texto) {
+        if (texto == null || texto.length() == 0) {
+            return false;
+        }
+        for (int i = 0; i < texto.length(); i++) {
+            char c = texto.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -733,6 +764,10 @@ public class Funciones {
 
         if (!contrasenia1.equals(contrasenia2)) {
             System.out.println("Las contraseñas no coinciden");
+            return;
+        }
+        if (!Cadenas.contraseniaFuerte(contrasenia1)) {
+            System.out.println("La contraseña no es segura");
             return;
         }
 
