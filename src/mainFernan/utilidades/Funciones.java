@@ -183,7 +183,7 @@ public class Funciones {
             return;
         }
 
-        System.out.print("ID de la entrada: ");
+        System.out.print("ID de la entrada (6 para la primera, 12 para la segunda y 17 para la tercera): ");
         int idEntrada = Integer.parseInt(sc.nextLine());
 
         System.out.print("Cantidad de entradas: ");
