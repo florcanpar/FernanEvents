@@ -43,6 +43,49 @@ public class Funciones {
         System.out.println("2. Salir");
     }
 
+    public static void menuAsistenteUsuario(String[][] usuarios, String[][] eventos, int posAsistente){
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+
+        do {
+            menuAsistente();
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion){
+                case 1:
+                    //misEventos();
+                    break;
+
+                case 2:
+                    // verEventos();
+                    break;
+
+                case 3:
+                    carteraUsuario(usuarios, posAsistente);
+                    break;
+
+                case 4:
+                    // invitarAmigo();
+                    break;
+
+                case 5:
+                    configuracionUsuario(usuarios, posAsistente);
+                    break;
+
+                case 0:
+                    System.out.println("Cerrando sesión");
+                    break;
+
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
+            }
+
+        }while (opcion != 0);
+
+    }
+
     public static void menuAsistente(){
         final String MORADO = "\u001B[35m";
         final String RESET_COLOR = "\u001B[0m";
@@ -53,10 +96,46 @@ public class Funciones {
         System.out.println("3. Cartera Digital.");
         System.out.println("4. Invita a un amigo");
         System.out.println("5. Configuración.");
-        System.out.println("6. Cerrar Sesión");
+        System.out.println("0. Cerrar Sesión");
     }
 
-    public static void menuOrganizador(){
+    public static void menuOrganizadorUsuario(String[][] usuarios, String[][] eventos, int posOrganizador){
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+
+        do {
+            menuOrganizador();
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion){
+                case 1:
+
+                    break;
+
+                case 2:
+                    carteraUsuario(usuarios, posOrganizador);
+                    break;
+
+                case 3:
+                    configuracionUsuario(usuarios, posOrganizador);
+                    break;
+
+                case 0:
+                    System.out.println("Cerrando sesión");
+                    break;
+
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
+            }
+
+        }while (opcion != 0);
+
+    }
+
+
+        public static void menuOrganizador(){
         final String AZUL = "\u001B[34m";
         final String RESET_COLOR = "\u001B[0m";
 
@@ -64,7 +143,7 @@ public class Funciones {
         System.out.println("1. Mis Eventos.");
         System.out.println("2. Cartera Digital.");
         System.out.println("3. Configuración.");
-        System.out.println("4. Cerrar Sesión");
+        System.out.println("0. Cerrar Sesión");
     }
 
     public static void menuOrganizadorEventos(){
@@ -76,7 +155,7 @@ public class Funciones {
         System.out.println("5. Salir.");
     }
 
-    public static void menuAdministradoUsuario(String[][] usuarios, String[][] eventos, int posAdmin){
+    public static void menuAdministradorUsuario(String[][] usuarios, String[][] eventos, int posAdmin){
         Scanner sc = new Scanner(System.in);
         int opcion;
 
