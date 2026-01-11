@@ -30,14 +30,16 @@ public class fernanEvents {
         usuarios[1][2] = "ORGANIZADOR";
         usuarios[1][3] = "false";
         usuarios[1][4] = "true";
-        usuarios[1][5] = "101";
+        usuarios[1][5] = "0";
+        usuarios[1][6] = "101";
 
         usuarios[2][0] = "asistente1";
         usuarios[2][1] = "1234a1";
         usuarios[2][2] = "ASISTENTE";
         usuarios[2][3] = "false";
         usuarios[2][4] = "true";
-        usuarios[2][5] = "102";
+        usuarios[2][5] = "0";
+        usuarios[2][6] = "102";
 
         // [i][0] -> nombre
         // [i][1] -> descripción breve
@@ -120,7 +122,7 @@ public class fernanEvents {
                 break;
 
                 case 3:
-                    System.out.println("Gracias por tu visiata....");
+                    System.out.println("Gracias por tu visita....");
                     break;
 
             }

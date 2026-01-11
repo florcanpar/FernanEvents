@@ -1,6 +1,5 @@
 package mainFernan.utilidades;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Funciones {
@@ -77,6 +76,206 @@ public class Funciones {
         System.out.println("5. Salir.");
     }
 
+    public static void menuAdministradoUsuario(String[][] usuarios, String[][] eventos, int posAdmin){
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+
+        do {
+            menuAdministrador();
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion){
+                case 1:
+                    panelDeControl(usuarios);
+                    break;
+
+                case 2:
+                    menuEventosAdmin(eventos);
+                    break;
+
+                case 3:
+                    carteraUsuario(usuarios, posAdmin);
+                    break;
+
+                case 4:
+                    configuracionUsuario(usuarios, posAdmin);
+                    break;
+
+                case 0:
+                    System.out.println("Cerrando sesión");
+                    break;
+
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
+            }
+
+        }while (opcion != 0);
+    }
+
+    public static void panelDeControl(String[][] usuarios) {
+
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println("--- PANEL DE CONTROL ADMIN ---");
+            System.out.println("1. Bloquear usuario");
+            System.out.println("2. Desbloquear usuario");
+            System.out.println("0. Salir");
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Introduce la id del usuario a BLOQUEAR: ");
+                    int posBloquearUsuario = Integer.parseInt(sc.nextLine());
+
+                    if (posBloquearUsuario < 0 || posBloquearUsuario >= usuarios.length || usuarios[posBloquearUsuario][0] == null) {
+                        System.out.println("Usuario no valido");
+                    } else {
+                        usuarios[posBloquearUsuario][3] = "true";
+                        System.out.println("Usuario bloqueado");
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Introduce la posición del usuario a DESBLOQUEAR: ");
+                    int posDesbloquearUsuario = Integer.parseInt(sc.nextLine());
+
+                    if (posDesbloquearUsuario < 0 || posDesbloquearUsuario >= usuarios.length || usuarios[posDesbloquearUsuario][0] == null) {
+                        System.out.println("Usuario no valido");
+                    } else {
+                        usuarios[posDesbloquearUsuario][3] = "false";
+                        System.out.println("Usuario desbloqueado");
+                    }
+                    break;
+
+                case 0:
+                    System.out.println("Saliendo del panel de control...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida");
+            }
+
+        } while (opcion != 0);
+    }
+
+    public static void configuracionUsuario(String[][] usuarios, int posUsuario) {
+
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println();
+            System.out.println("--- CONFIGURACIÓN ---");
+            System.out.println("1. Cambiar nombre de usuario");
+            System.out.println("2. Cambiar contraseña");
+            System.out.println("0. Salir");
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+
+                case 1:
+                    System.out.print("Nuevo nombre de usuario: ");
+                    String nuevoNombre = sc.nextLine().toLowerCase();
+
+                    boolean existe = false;
+                    for (int i = 0; i < usuarios.length; i++) {
+                        if (usuarios[i][0] != null && usuarios[i][0].equals(nuevoNombre)) {
+                            existe = true;
+                        }
+                    }
+
+                    if (existe) {
+                        System.out.println("Ese nombre de usuario ya existe");
+                    } else {
+                        usuarios[posUsuario][0] = nuevoNombre;
+                        System.out.println("Nombre de usuario cambiado correctamente");
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Contraseña actual: ");
+                    String passActual = sc.nextLine();
+
+                    if (!Cadenas.contraseniaSonIguales(passActual, usuarios[posUsuario][1])) {
+                        System.out.println("Contraseña incorrecta");
+                        break;
+                    }
+
+                    System.out.print("Nueva contraseña: ");
+                    String nuevaContrasenia = sc.nextLine();
+
+                    System.out.print("Repite nueva contraseña: ");
+                    String nuevaContrasenia2 = sc.nextLine();
+
+                    if (!Cadenas.contraseniaSonIguales(nuevaContrasenia, nuevaContrasenia2)) {
+                        System.out.println("Las contraseñas no coinciden");
+                        break;
+                    }
+
+                    if (!Cadenas.contraseniaFuerte(nuevaContrasenia)) {
+                        System.out.println("La contraseña no es segura");
+                        break;
+                    }
+
+                    usuarios[posUsuario][1] = nuevaContrasenia;
+                    System.out.println("Contraseña cambiada correctamente");
+                    break;
+
+                case 0:
+                    System.out.println("Saliendo de configuración...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida");
+            }
+
+        } while (opcion != 3);
+    }
+
+    public static void menuEventosAdmin(String[][] eventos){
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println("--- EVENTOS ---");
+            System.out.println("1. Ver eventos");
+            System.out.println("2. Editar evento");
+            System.out.println("3. Eliminar evento");
+            System.out.println("0. Salir");
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+
+                case 1:
+                    // verEventos();
+                    break;
+
+                case 2:
+                    // editarEventos();
+                    break;
+
+                case 3:
+                    // eliminarEvento();
+                    break;
+
+                case 0:
+                    System.out.println("Saliendo de eventos...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida");
+            }
+
+        } while (opcion != 0);
+    }
+
     public static void menuAdministrador(){
         final String VERDE = "\u001B[32m";
         final String RESET_COLOR = "\u001B[0m";
@@ -86,7 +285,7 @@ public class Funciones {
         System.out.println("2. Eventos.");
         System.out.println("3. Cartera Digital.");
         System.out.println("4. Configuración.");
-        System.out.println("5. Cerrar Sesión");
+        System.out.println("0. Cerrar Sesión");
     }
 
     /**
@@ -266,12 +465,12 @@ public class Funciones {
         }
 
         System.out.print("Contraseña: ");
-        String pass1 = sc.nextLine();
+        String contrasenia1 = sc.nextLine();
 
         System.out.print("Repite contraseña: ");
-        String pass2 = sc.nextLine();
+        String contrasenia2 = sc.nextLine();
 
-        if (!pass1.equals(pass2)) {
+        if (!contrasenia1.equals(contrasenia2)) {
             System.out.println("Las contraseñas no coinciden");
             return;
         }
@@ -283,7 +482,7 @@ public class Funciones {
         } while (!rol.equals("ASISTENTE") && !rol.equals("ORGANIZADOR"));
 
         usuarios[posLibre][0] = usuario;
-        usuarios[posLibre][1] = pass1;
+        usuarios[posLibre][1] = contrasenia1;
         usuarios[posLibre][2] = rol;
         usuarios[posLibre][3] = "false";
         usuarios[posLibre][4] = "false";
@@ -336,8 +535,7 @@ public class Funciones {
 
     public static void crearEntradas(String[][] eventos, int idEvento, int idEntrada){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Inserte el nombre de la entrada: ");
-        eventos[idEvento][idEntrada+1] = sc.nextLine();
+
         do {
             System.out.println("Inserte el nombre de la entrada: ");
             eventos[idEvento][idEntrada+1] = sc.nextLine();
