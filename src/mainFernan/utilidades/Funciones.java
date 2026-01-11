@@ -953,11 +953,11 @@ public class Funciones {
 
     public static void verEntradasEventos(String[][] eventos, int idEvento){
         if (!(eventos[idEvento][7] == null)){
-            entradasDetalladas(eventos, idEvento, Integer.parseInt(eventos[idEvento][7]));
+            entradasDetalladas(eventos, idEvento, 7);
         }else if (!(eventos[idEvento][12] == null)){
-            entradasDetalladas(eventos, idEvento, Integer.parseInt(eventos[idEvento][12]));
+            entradasDetalladas(eventos, idEvento, 12);
         } else if (!(eventos[idEvento][17] == null)) {
-            entradasDetalladas(eventos, idEvento, Integer.parseInt(eventos[idEvento][17]));
+            entradasDetalladas(eventos, idEvento, 17);
         }
     }
 
