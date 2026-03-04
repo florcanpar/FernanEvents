@@ -610,13 +610,13 @@ public class Funciones {
         System.out.println("Aforo: " + evento[idEvento][4]);
         System.out.println("Número de inscritos: " + evento[idEvento][5]);
         if (evento[idEvento][7].isEmpty() && evento[idEvento][12].isEmpty()) {
-            System.out.println("Tipo de entradas: " + evento[idEvento][7]);
+            System.out.println("Tipo de entradas: " + evento[idEvento][17]);
         } else if (evento[idEvento][12].isEmpty() && (!evento[idEvento][17].isEmpty())) {
-            System.out.println("Tipo de entradas: " + evento[idEvento][7] + " y " + evento[idEvento][12]);
+            System.out.println("Tipo de entradas: " + evento[idEvento][7] + " y " + evento[idEvento][17]);
         } else if ((!evento[idEvento][12].isEmpty()) && evento[idEvento][17].isEmpty()) {
             System.out.println("Tipo de entradas: " + evento[idEvento][7] + " y " + evento[idEvento][12]);
         } else if ((!evento[idEvento][12].isEmpty()) && (!evento[idEvento][17].isEmpty())) {
-            System.out.println("Tipo de entradas: " + evento[idEvento][7] + ", " + evento[idEvento][12] + " y " + evento[idEvento][12]);
+            System.out.println("Tipo de entradas: " + evento[idEvento][7] + ", " + evento[idEvento][12] + " y " + evento[idEvento][17]);
         }
     }
 
