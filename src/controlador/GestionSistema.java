@@ -57,6 +57,13 @@ public class GestionSistema {
         }
     }
 
+
+    /**
+     * Busca si la id proporcionada la tiene algun usuario y si es así podemos bloquear o desbloquear
+     * @param id
+     * @param desbloqueado
+     * @return
+     */
     public static boolean cambiarEstadoBloqueo(String id, boolean desbloqueado) {
         for (Usuario usuario : usuarios) {
             if (usuario != null && usuario.getId().equals(id)) {

@@ -9,6 +9,7 @@ public class Cadenas {
      * @return
      */
 
+
     public static boolean contraseniaSonIguales (String contrasenia1, String contrasenia2){
         return contrasenia1.equals(contrasenia2);
     }
@@ -28,6 +29,13 @@ public class Cadenas {
 
         return true;
     }
+
+    /**
+     * Recorre la cadena entera y la divide en caracteres comprobando si tiene alguno
+     * de lo simbolos expeciales.
+     * @param cadena
+     * @return
+     */
     public static boolean tieneSimbolo(String cadena) {
         for (int i = 0; i < cadena.length(); i++) {
             char caracter = cadena.charAt(i);
@@ -39,6 +47,11 @@ public class Cadenas {
     }
 
 
+    /**
+     * Comprueba la si la cadena proporcionada tiene minúsculas
+     * @param cadena
+     * @return
+     */
     public static boolean tieneMinuscula(String cadena) {
         for (int i = 0; i < cadena.length(); i++) {
             char caracter = cadena.charAt(i);
@@ -47,6 +60,11 @@ public class Cadenas {
         return false;
     }
 
+    /**
+     * Comprueba si la cadena proporcionada tiene mayúsculas
+     * @param cadena
+     * @return
+     */
     public static boolean tieneMayuscula(String cadena) {
         for (int i = 0; i < cadena.length(); i++) {
             char caracter = cadena.charAt(i);
@@ -55,6 +73,11 @@ public class Cadenas {
         return false;
     }
 
+    /**
+     * Comprueba si la cadena proporcionada tiene algun número
+     * @param cadena
+     * @return
+     */
     public static boolean tieneNumero(String cadena) {
         for (int i = 0; i < cadena.length(); i++) {
             char caracter = cadena.charAt(i);
