@@ -156,7 +156,7 @@ public class Main {
                     System.out.println("Cuenta de Organizador creada.");
                 } else {
                     nuevoUsuario = new Asistente(nombre, contraseniaNuevoUsuario, id, nombre + "@correo.com");
-                    ((Asistente)nuevoUsuario).setCartera(50.0);
+                    ((Asistente)nuevoUsuario).setCartera(50.0); // te lo regalos por sexy
                     System.out.println("Cuenta de Asistente creada (+50 saldo).");
                 }
 
