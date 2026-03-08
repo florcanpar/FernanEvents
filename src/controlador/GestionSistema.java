@@ -19,6 +19,11 @@ public class GestionSistema {
         return null;
     }
 
+    /**
+     * Guarda un nuevo evento en el array.
+     * @param nuevoEvento
+     */
+
     public static void guardarEvento(Evento nuevoEvento) {
         for (int i = 0; i < eventos.length; i++) {
             if (eventos[i] == null) {
@@ -28,21 +33,9 @@ public class GestionSistema {
         }
     }
 
-    public static boolean tramitarCompra(Asistente asistente, Evento evento, int i, int cantidad) {
-        TipoEntrada tipoEntrada = evento.getTiposEntradas()[i];
-        double coste = tipoEntrada.getPrecio() * cantidad;
-
-        if (asistente.getCartera() >= coste && tipoEntrada.getStockDisponible() >= cantidad) {
-            asistente.setCartera(asistente.getCartera() - coste);
-            if (adminPrincipal != null) adminPrincipal.setCartera(adminPrincipal.getCartera() + (coste * 0.1));
-            if (organizadorPrincipal != null) organizadorPrincipal.setCartera(organizadorPrincipal.getCartera() + (coste * 0.9));
-
-            tipoEntrada.registrarVenta(cantidad);
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * Una función que sirve para listar los eventos.
+     */
     public static void listarEventos() {
         final String BLANCO = "\u001B[37m";
         final String RESET = "\u001B[0m";
