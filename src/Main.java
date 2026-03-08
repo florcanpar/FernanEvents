@@ -4,6 +4,8 @@ import vista.*;
 import utilidades.Cadenas;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import utilidades.TokenAleatorio;
+import utilidades.DobleFactorCorreo;
 
 public class Main {
 
@@ -122,11 +124,29 @@ public class Main {
                     }
                 }
 
+                System.out.print("Introduzca su correo para verificar la cuenta: ");
+                String email = sc.nextLine();
+
+                String tokenEnviado = String.valueOf(TokenAleatorio.tokenAleatorio());
+                String cuerpo = "<h2>Tu código de registro es: <strong>" + tokenEnviado + "</strong></h2>";
+
+                System.out.println("Enviando codigo a " + email + "...");
+                DobleFactorCorreo.enviarGMail(email, "Código de Registro FernanEvents", cuerpo);
+
+                System.out.print("Escribe el código recibido: ");
+                String tokenUser = sc.nextLine();
+
+                if (tokenUser.equals(tokenEnviado)) {
+                    System.out.println("Registro completado con éxito.");
+                } else {
+                    System.out.println("Código incorrecto.");
+                }
+
                 System.out.print("ID único: ");
                 String id = sc.nextLine();
                 System.out.println("Tipo de perfil:");
-                System.out.println("1. ASISTENTE");
-                System.out.println("2. ORGANIZADOR");
+                System.out.println("《1》 ASISTENTE");
+                System.out.println("《2》 ORGANIZADOR");
                 System.out.print("Seleccione: ");
                 int opcion = Integer.parseInt(sc.nextLine());
 
@@ -136,7 +156,7 @@ public class Main {
                     System.out.println("Cuenta de Organizador creada.");
                 } else {
                     nuevoUsuario = new Asistente(nombre, contraseniaNuevoUsuario, id, nombre + "@correo.com");
-                    ((Asistente)nuevoUsuario).setCartera(50.0); // Regalo inicial
+                    ((Asistente)nuevoUsuario).setCartera(50.0);
                     System.out.println("Cuenta de Asistente creada (+50 saldo).");
                 }
 
