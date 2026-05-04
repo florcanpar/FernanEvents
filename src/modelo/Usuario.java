@@ -1,13 +1,18 @@
 package modelo;
 
-public abstract class Usuario {
-    protected String nombre;
-    protected String contrasenia;
-    protected String id;
-    protected String email;
-    protected double cartera;
-    protected int intentos;
-    protected boolean bloqueado;
+import utilidades.Bloqueable;
+import java.io.Serializable;
+
+public abstract class Usuario implements Bloqueable, Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private String nombre;
+    private String contrasenia;
+    private String id;
+    private String email;
+    private double cartera;
+    private int intentos;
+    private boolean bloqueado;
 
     public Usuario(String nombre, String contrasenia, String id, String email) {
         this.nombre = nombre;
@@ -19,24 +24,59 @@ public abstract class Usuario {
         this.bloqueado = false;
     }
 
-    public boolean validarAcceso(String contrasenia) {
-        if (this.contrasenia.equals(contrasenia)) {
+    public boolean validarAcceso(String password) {
+        if (this.bloqueado) return false;
+
+        if (this.contrasenia.equals(password)) {
             this.intentos = 0;
             return true;
+        } else {
+            this.intentos++;
+            if (this.intentos >= 3) {
+                bloquear();
+            }
+            return false;
         }
-        this.intentos++;
-        if (this.intentos >= 3) this.bloqueado = true;
-        return false;
     }
 
+    @Override
+    public void bloquear() {
+        this.bloqueado = true;
+    }
 
-    public String getId() { return id; }
+    @Override
+    public void desbloquear() {
+        this.bloqueado = false;
+        this.intentos = 0;
+    }
+
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getContrasenia() { return contrasenia; }
     public void setContrasenia(String contrasenia) { this.contrasenia = contrasenia; }
+
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
     public double getCartera() { return cartera; }
-    public void setCartera(double cartera) { this.cartera = cartera; }
+
+    public void setCartera(double cartera) {
+        if (cartera >= 0) {
+            this.cartera = cartera;
+        }
+    }
+
+    public int getIntentos() { return intentos; }
+
     public boolean isBloqueado() { return bloqueado; }
-    public void bloquear() { this.bloqueado = true; }
-    public void desbloquear() { this.bloqueado = false; this.intentos = 0; }
+
+    @Override
+    public String toString() {
+        String estado = bloqueado ? " [BLOQUEADO]" : "";
+        return "ID: " + id + " | Nombre: " + nombre + " | Email: " + email + " | Saldo: " + cartera + "€" + estado;
+    }
 }
