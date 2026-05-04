@@ -8,63 +8,42 @@ import java.util.Scanner;
 
 public class VistaEvento {
 
-    public static void crearEvento(Organizador organizador, Scanner sc) {
+    public static void crearEvento(Organizador organizador) {
+        Scanner sc = new Scanner(System.in);
         final String MORADO = "\u001B[35m";
         final String BLANCO = "\u001B[37m";
         final String RESET = "\u001B[0m";
-        System.out.println(MORADO + " ┌───────────────────────┐");
-        System.out.println(MORADO + " │     "+BLANCO+"CREAR EVENTO"+MORADO+"      │");
-        System.out.println(MORADO + " └───────────────────────┘"+RESET);
-        System.out.print("Inserte el nombre del evento: ");
-        String nombre = sc.nextLine();
-        System.out.print("Inserte la descripción: ");
-        String descripcion = sc.nextLine();
+        System.out.println(MORADO + " ┌───────────────────────┐\n │     "+BLANCO+"CREAR EVENTO"+MORADO+"      │\n └───────────────────────┘"+RESET);
 
-        System.out.println("Categorías:");
-        Categoria[] categorias = Categoria.values();
-        for (int i = 0; i < categorias.length; i++) {
-            System.out.println((i + 1) + ". " + categorias[i]);
-        }
-        System.out.print("Seleccione (1-7): ");
-        int opcionCategoria = Integer.parseInt(sc.nextLine());
-        Categoria categoriaElegida = categorias[opcionCategoria - 1];
+        System.out.print("Nombre: "); String nombre = sc.nextLine();
+        System.out.print("Descripción: "); String desc = sc.nextLine();
+
+        Categoria[] cats = Categoria.values();
+        for (int i = 0; i < cats.length; i++) System.out.println((i+1) + ". " + cats[i]);
+        System.out.print("Categoría: "); Categoria cat = cats[Integer.parseInt(sc.nextLine()) - 1];
 
         System.out.print("Fecha (dd/MM/yyyy HH:mm): ");
-        String fechaElegida = sc.nextLine();
-        DateTimeFormatter formatoFechaYHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime fecha = LocalDateTime.parse(fechaElegida, formatoFechaYHora);
+        LocalDateTime fecha = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 
-        System.out.print("Aforo: ");
-        int aforo = Integer.parseInt(sc.nextLine());
+        System.out.print("Aforo: "); int aforo = Integer.parseInt(sc.nextLine());
+        System.out.print("Número de tipos de entrada (1-3): ");
+        int n = Math.min(Integer.parseInt(sc.nextLine()), 3);
 
-        System.out.print("¿Cuantos tipos de entrada? (1-3): ");
-        int numeroEntradas = Integer.parseInt(sc.nextLine());
-        if (numeroEntradas > 3) numeroEntradas = 3;
-
-        TipoEntrada[] tipos = new TipoEntrada[numeroEntradas];
-        for (int i = 0; i < numeroEntradas; i++) {
-            System.out.println("Tipo " + (i+1) + ":");
-            System.out.print("Inserte el nombre: ");
-            String nombreTipoEntrada = sc.nextLine();
-            System.out.print("Inserte el precio: ");
-            double precioTipoEntrada = Double.parseDouble(sc.nextLine());
-            System.out.print("Inserte el stock: ");
-            int stockTipoEntrada = Integer.parseInt(sc.nextLine());
-            System.out.println("Inserte la descripción: ");
-            String descripcionTipoEntrada = sc.nextLine();
-            tipos[i] = new TipoEntrada(nombreTipoEntrada, descripcionTipoEntrada + nombreTipoEntrada, precioTipoEntrada, stockTipoEntrada);
+        TipoEntrada[] tipos = new TipoEntrada[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Nombre tipo " + (i+1) + ": "); String nt = sc.nextLine();
+            System.out.print("Precio: "); double p = Double.parseDouble(sc.nextLine());
+            System.out.print("Stock: "); int s = Integer.parseInt(sc.nextLine());
+            tipos[i] = new TipoEntrada(nt, desc + " " + nt, p, s);
         }
 
-        Evento nuevoEvento = new Evento(nombre, descripcion, categoriaElegida, fecha, aforo, tipos, organizador.getId());
-        GestionSistema.guardarEvento(nuevoEvento);
-        System.out.println("Evento creado con éxito.");
+        GestionSistema.guardarEvento(new Evento(nombre, desc, cat, fecha, aforo, tipos, organizador.getId()));
+        System.out.println("Evento creado.");
     }
 
-    public static void modificarEvento(Evento e, Scanner sc) {
-        System.out.print("Nuevo nombre: ");
-        e.setNombre(sc.nextLine());
-        System.out.print("Nuevo aforo: ");
-        e.setAforo(Integer.parseInt(sc.nextLine()));
-        System.out.println("Evento actualizado con éxito.");
+    public static void modificarEvento(Evento e) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nuevo nombre: "); e.setNombre(sc.nextLine());
+        System.out.print("Nuevo aforo: "); e.setAforo(Integer.parseInt(sc.nextLine()));
     }
 }

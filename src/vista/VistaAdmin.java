@@ -16,7 +16,6 @@ public class VistaAdmin {
             System.out.println(VERDE + "╭───────────── " + AMARILLO + "◈" + VERDE + " ─────────────╮");
             System.out.println("  " + AMARILLO + "《" + BLANCO + " PANEL DE ADMINISTRADOR " + AMARILLO + "》");
             System.out.println(VERDE + "╰───────────── " + AMARILLO + "◈" + VERDE + " ─────────────╯" + RESET);
-            System.out.println("Comisiones sistema (10%): " + admin.getCartera() + "€");
             System.out.println(VERDE +"《1》" + RESET + " Panel de Control");
             System.out.println(VERDE +"《2》" + RESET + " Eventos");
             System.out.println(VERDE +"《3》" + RESET + " Cartera digital");
@@ -28,7 +27,7 @@ public class VistaAdmin {
             switch (opcion) {
                 case 1 -> gestionarBloqueos(sc);
                 case 2 -> GestionSistema.listarEventos();
-                case 3 -> System.out.println("Comisiones: (10%)" + admin.getCartera() + "€");
+                case 3 -> System.out.println("Comisiones (10%): " + admin.getCartera() + "€");
                 case 4 -> {
                     System.out.print("Inserte su nuevo usuario: "); admin.setNombre(sc.nextLine());
                     System.out.print("Inserte su nueva contraseña: "); admin.setContrasenia(sc.nextLine());

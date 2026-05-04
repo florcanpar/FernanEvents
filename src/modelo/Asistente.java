@@ -1,22 +1,22 @@
 package modelo;
 
+import java.util.ArrayList;
+
 public class Asistente extends Usuario {
-    private String amigos = "";
+    // Cambiamos el atributo a ArrayList
+    private ArrayList<Entrada> misEntradas = new ArrayList<>();
 
     public Asistente(String usuario, String contrasenia, String id, String email) {
         super(usuario, contrasenia, id, email);
     }
 
-    public String getAmigos() {
-        if (amigos.equals("")) return "No ha añadido ningún amigo aún.";
-        return amigos;
+    // El método ahora devuelve la colección dinámica
+    public ArrayList<Entrada> getMisEntradas() {
+        return misEntradas;
     }
 
-    public void setAmigos(String amigos) {
-        this.amigos = amigos;
+    public void añadirEntrada(Entrada nuevaEntrada) {
+        this.misEntradas.add(nuevaEntrada);
     }
 
-    public void añadirAmigo(String emailAmigo) {
-        this.amigos += emailAmigo + ", ";
-    }
 }

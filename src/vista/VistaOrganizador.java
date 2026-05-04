@@ -19,14 +19,14 @@ public class VistaOrganizador {
             System.out.println("Saldo: " + organizador.getCartera() + "€");
             System.out.println(MORADO +"《1》" + RESET + " Crear nuevo evento");
             System.out.println(MORADO +"《2》" + RESET + " Mis eventos");
-            System.out.println(MORADO +"《3》" + RESET + " Cartera Digital");
+            System.out.println(MORADO +"《3》" + RESET + " Retirar dinero");
             System.out.println(MORADO +"《4》" + RESET + " Configuración");
             System.out.println(MORADO +"《5》" + RESET + " Salir");
+            System.out.print("Seleccione: ");
             opcion = Integer.parseInt(sc.nextLine());
 
-            if (opcion == 1) VistaEvento.crearEvento(organizador, sc);
+            if (opcion == 1) VistaEvento.crearEvento(organizador);
             else if (opcion == 2) gestionarMisEventos(organizador, sc);
-            else if (opcion == 3) System.out.println("Comisiones 90%: " + organizador.getCartera() + "€");
             else if (opcion == 4) {
 
                 System.out.print("Inserte nuevo usuario: "); organizador.setNombre(sc.nextLine());
@@ -51,7 +51,7 @@ public class VistaOrganizador {
             evento.mostrarGraficoBarras();
             System.out.println(MORADO +"《1》" + RESET + "Modificar.");
             System.out.println(MORADO +"《2》" + RESET + "Volver.");
-            if (sc.nextLine().equals("1")) VistaEvento.modificarEvento(evento, sc);
+            if (sc.nextLine().equals("1")) VistaEvento.modificarEvento(evento);
         }
     }
 }
