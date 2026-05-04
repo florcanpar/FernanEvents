@@ -25,6 +25,7 @@ public class Evento {
         this.idOrganizador = idOrganizador;
     }
 
+
     public int getInscritosTotales() {
         int total = 0;
         for (TipoEntrada tipo : tiposEntradas) {
@@ -49,5 +50,59 @@ public class Evento {
     public String toString() {
         DateTimeFormatter formatoFechaYHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         return nombre + ", [" + categoria + "].\nFecha y Hora:" + fecha.format(formatoFechaYHora) + "\nInscritos: " + getInscritosTotales() + "/" + aforo;
+    }
+
+    public void mostrarGraficoBarras() {
+        final String VERDE = "\u001B[32m";
+        final String BLANCO = "\u001B[37m";
+        final String RESET = "\u001B[0m";
+        double graficoBarrasTotal= (aforo > 0) ? ((double) getInscritosTotales() / aforo) * 100 : 0;
+        int porcentajeRelleno = (int) graficoBarrasTotal / 10;
+        System.out.print(nombre + " [");
+        for (int i = 0; i < 10; i++) {
+            System.out.print(i < porcentajeRelleno ? VERDE+"▓" : BLANCO+"░"+RESET);
+        }
+        System.out.println("] " + String.format("%.2f", graficoBarrasTotal) + "%");
+
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getAforo() {
+        return aforo;
+    }
+
+    public void setAforo(int aforo) {
+        this.aforo = aforo;
+    }
+
+    public void setIdOrganizador(String idOrganizador) {
+        this.idOrganizador = idOrganizador;
     }
 }

@@ -17,9 +17,9 @@ public class VistaAsistente {
                 opcion = Integer.parseInt(sc.nextLine());
                 if (opcion == 1) mostrarMisEventos(asistente);
                 else if (opcion == 2) mostrarEventosPlataforma(asistente);
-                else if (opcion == 3) gestionarCartera(asistente);
-                else if (opcion == 4) invitarAmigo(asistente);
-                else if (opcion == 5) configurarCuenta(asistente);
+                else if (opcion == 3) gestionarCartera(asistente, sc);
+                else if (opcion == 4) invitarAmigo(asistente, sc);
+                else if (opcion == 5) configurarCuenta(asistente, sc);
             } catch (Exception e) { System.out.println("Entrada inválida."); }
         }
     }
