@@ -1,40 +1,41 @@
 package controlador;
 
 import modelo.*;
-import java.util.ArrayList; // Importación necesaria para ArrayList
+import java.util.ArrayList;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class GestionSistema {
-    // CAMBIO TEMA 7: De arrays fijos a ArrayList dinámico
-    public static Usuario[] usuarios = new Usuario[20]; // Este lo cambiaremos a HashMap más adelante
-    public static ArrayList<Evento> eventos = new ArrayList<>(); // Ahora es dinámico
+
+    public static Usuario[] usuarios = new Usuario[20];
+    public static ArrayList<Evento> eventos = new ArrayList<>();
 
     private static Administrador adminPrincipal;
-    private static Organizador organizadorPrincipal;
+    private static final String ARCHIVO_EVENTOS = "eventos.dat";
+    private static final String ARCHIVO_LOG = "actividad.log";
 
     public static void setAdminPrincipal(Administrador administrador) {
         adminPrincipal = administrador;
     }
 
-    public static void setOrganizadorPrincipal(Organizador organizador) {
-        organizadorPrincipal = organizador;
-    }
-
     public static Usuario autenticar(String usuario1, String contrasenia) {
         for (Usuario usuario : usuarios) {
             if (usuario != null && usuario.getNombre().equals(usuario1) && usuario.validarAcceso(contrasenia)) {
+                registrarLog("Login exitoso: " + usuario1);
                 return usuario;
             }
         }
+        registrarLog("Intento de login fallido: " + usuario1);
         return null;
     }
 
-    // REFACTORIZADO: Ya no necesitamos buscar huecos, solo añadir[cite: 1]
     public static void guardarEvento(Evento nuevoEvento) {
         eventos.add(nuevoEvento);
+        guardarDatosFisicos();
     }
 
     public static boolean tramitarCompra(Asistente asistente, Evento evento, int i, int cantidad) {
-        // Accedemos al ArrayList de tipos de entrada del evento[cite: 1]
         TipoEntrada tipoEntrada = evento.getTiposEntradas().get(i);
         double coste = tipoEntrada.getPrecio() * cantidad;
 
@@ -42,20 +43,19 @@ public class GestionSistema {
             asistente.setCartera(asistente.getCartera() - coste);
 
             if (adminPrincipal != null) {
-                double comisionAdmin = coste * 0.10;
-                adminPrincipal.setCartera(adminPrincipal.getCartera() + comisionAdmin);
+                adminPrincipal.setCartera(adminPrincipal.getCartera() + (coste * 0.10));
             }
 
             Organizador creador = buscarOrganizadorPorId(evento.getIdOrganizador());
             if (creador != null) {
-                double pagoOrganizador = coste * 0.90;
-                creador.setCartera(creador.getCartera() + pagoOrganizador);
+                creador.setCartera(creador.getCartera() + (coste * 0.90));
             }
 
             tipoEntrada.registrarVenta(cantidad);
-            Entrada nuevaEntrada = new Entrada(evento, tipoEntrada, cantidad);
-            asistente.añadirEntrada(nuevaEntrada);
+            asistente.añadirEntrada(new Entrada(evento, tipoEntrada, cantidad));
 
+            registrarLog("COMPRA: " + asistente.getNombre() + " compró " + cantidad + " de " + evento.getNombre());
+            guardarDatosFisicos();
             return true;
         }
         return false;
@@ -70,25 +70,49 @@ public class GestionSistema {
         return null;
     }
 
-    // REFACTORIZADO: Uso de for-each para el ArrayList[cite: 1]
     public static void listarEventos() {
-        final String BLANCO = "\u001B[37m";
-        final String RESET = "\u001B[0m";
         System.out.println(" ┌───────────────────────┐");
-        System.out.println(" │      "+BLANCO+"LOS EVENTOS"+RESET+"      │");
+        System.out.println(" │      LOS EVENTOS      │");
         System.out.println(" └───────────────────────┘");
-
         for (int i = 0; i < eventos.size(); i++) {
             System.out.println(i + ". " + eventos.get(i));
         }
     }
 
-    // REFACTORIZADO: Uso de .get() en lugar de corchetes[cite: 1]
     public static Evento getEvento(int i) {
         if (i >= 0 && i < eventos.size()) {
             return eventos.get(i);
         }
         return null;
+    }
+
+    public static void guardarDatosFisicos() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_EVENTOS))) {
+            oos.writeObject(eventos);
+        } catch (IOException e) {
+            System.err.println("Error al guardar datos: " + e.getMessage());
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void cargarDatosFisicos() {
+        File file = new File(ARCHIVO_EVENTOS);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                eventos = (ArrayList<Evento>) ois.readObject();
+            } catch (Exception e) {
+                System.err.println("Error al cargar datos: " + e.getMessage());
+            }
+        }
+    }
+
+    public static void registrarLog(String mensaje) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(ARCHIVO_LOG, true)))) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            out.println("[" + dtf.format(LocalDateTime.now()) + "] " + mensaje);
+        } catch (IOException e) {
+            System.err.println("Error en el log: " + e.getMessage());
+        }
     }
 
     public static void listarUsuarios() {
@@ -104,6 +128,7 @@ public class GestionSistema {
         for (Usuario usuario : usuarios) {
             if (usuario != null && usuario.getId().equals(id)) {
                 if (desbloqueado) usuario.desbloquear(); else usuario.bloquear();
+                registrarLog("ESTADO: Usuario " + id + (desbloqueado ? " desbloqueado" : " bloqueado"));
                 return true;
             }
         }

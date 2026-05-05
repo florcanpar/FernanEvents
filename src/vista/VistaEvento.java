@@ -11,7 +11,7 @@ public class VistaEvento {
 
     public static void crearEvento(Organizador organizador) {
         Scanner sc = new Scanner(System.in);
-        // ... (Colores se mantienen igual)
+
         final String MORADO = "\u001B[35m";
         final String BLANCO = "\u001B[37m";
         final String RESET = "\u001B[0m";
