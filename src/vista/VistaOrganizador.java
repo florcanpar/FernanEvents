@@ -53,7 +53,7 @@ public class VistaOrganizador {
         System.out.println(MORADO + " │      " + BLANCO + "MIS EVENTOS" + MORADO + "      │");
         System.out.println(MORADO + " └───────────────────────┘" + RESET);
 
-        GestionSistema.listarEventos();
+        GestionSistema.menuVerEventos(sc);
         System.out.print("ID del evento para gestionar (o -1 para volver): ");
 
         try {

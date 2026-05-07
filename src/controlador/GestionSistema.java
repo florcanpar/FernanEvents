@@ -3,10 +3,13 @@ package controlador;
 import modelo.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.Scanner;
 
 public class GestionSistema {
 
@@ -82,8 +85,12 @@ public class GestionSistema {
         System.out.println(" ┌───────────────────────┐");
         System.out.println(" │      LOS EVENTOS      │");
         System.out.println(" └───────────────────────┘");
-        for (int i = 0; i < eventos.size(); i++) {
-            System.out.println(i + ". " + eventos.get(i));
+        if (eventos.isEmpty()) {
+            System.out.println("No hay eventos disponibles.");
+        } else {
+            for (Evento e : eventos) {
+                System.out.println(e.toString());
+            }
         }
     }
 
@@ -96,18 +103,6 @@ public class GestionSistema {
             objectOutputStream.writeObject(eventos);
         } catch (IOException e) {
             System.err.println("Error al guardar datos: " + e.getMessage());
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public static void cargarDatosFisicos() {
-        File file = new File(ARCHIVO_EVENTOS);
-        if (file.exists()) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-                eventos = (ArrayList<Evento>) ois.readObject();
-            } catch (Exception e) {
-                System.err.println("Error al cargar datos: " + e.getMessage());
-            }
         }
     }
 
@@ -135,5 +130,46 @@ public class GestionSistema {
             return true;
         }
         return false;
+    }
+
+    public static void menuVerEventos(Scanner sc) {
+        System.out.println("\n--- OPCIONES DE VISUALIZACIÓN ---");
+        System.out.println("1. Ordenar por Fecha");
+        System.out.println("2. Ordenar por Categoría");
+        System.out.println("3. Ordenar por Número de Asistentes");
+        System.out.println("4. Ordenar por Importe (precio mínimo)");
+        System.out.println("5. Ver sin orden específico");
+        System.out.print("Seleccione una opción: ");
+
+        int opcion = Integer.parseInt(sc.nextLine());
+        switch (opcion) {
+            case 1 -> ordenarPorFecha();
+            case 2 -> ordenarPorCategoria();
+            case 3 -> ordenarPorAsistentes();
+            case 4 -> ordenarPorImporte();
+            default -> {
+            }
+        }
+        listarEventos(); // Método que ya tienes para mostrar la lista
+    }
+
+    public static void ordenarPorFecha() {
+        Collections.sort(eventos, Comparator.comparing(Evento::getFecha));
+    }
+
+    public static void ordenarPorCategoria() {
+        Collections.sort(eventos, Comparator.comparing(e -> e.getCategoria().toString()));
+    }
+
+    public static void ordenarPorAsistentes() {
+        Collections.sort(eventos, (e1, e2) -> Integer.compare(e2.getInscritosTotales(), e1.getInscritosTotales()));
+    }
+
+    public static void ordenarPorImporte() {
+        Collections.sort(eventos, (e1, e2) -> {
+            double p1 = e1.getTiposEntradas().isEmpty() ? 0 : e1.getTiposEntradas().get(0).getPrecio();
+            double p2 = e2.getTiposEntradas().isEmpty() ? 0 : e2.getTiposEntradas().get(0).getPrecio();
+            return Double.compare(p1, p2);
+        });
     }
 }

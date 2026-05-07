@@ -26,7 +26,7 @@ public class VistaAdmin {
                 opcion = Integer.parseInt(sc.nextLine());
                 switch (opcion) {
                     case 1 -> gestionarBloqueos(sc);
-                    case 2 -> GestionSistema.listarEventos();
+                    case 2 -> GestionSistema.menuVerEventos(sc);
                     case 3 -> System.out.println("Comisiones (10%): " + admin.getCartera() + "€");
                     case 4 -> {
                         System.out.print("Nuevo usuario: "); admin.setNombre(sc.nextLine());

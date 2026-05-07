@@ -89,7 +89,7 @@ public class VistaAsistente {
         System.out.println(AZUL + " │      " + BLANCO + "LOS EVENTOS" + AZUL + "      │");
         System.out.println(AZUL + " └───────────────────────┘" + RESET);
 
-        GestionSistema.listarEventos();
+        GestionSistema.menuVerEventos(sc);
         System.out.print("\nInserte el índice del evento para comprar o -1 para salir: ");
 
         try {

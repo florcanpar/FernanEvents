@@ -8,8 +8,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        GestionSistema.cargarDatosFisicos();
-
         Administrador admin = new Administrador("admin", "Admin123!", "D01", "jgarlaz583@g.educaand.es");
         Organizador org1 = new Organizador("juan_eventos", "Juan123!", "O01", "jgarlaz583@g.educaand.es");
         Asistente asis1 = new Asistente("pedro_fan", "Pedro123!", "A01", "jgarlaz583@g.educaand.es");
@@ -36,6 +34,15 @@ public class Main {
                        ██╔══╝░░██╔══╝░░██╔══██╗██║╚████║██╔══██║██║╚████║
                        ██║░░░░░███████╗██║░░██║██║░╚███║██║░░██║██║░╚███║
                        ╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝╚═╝░░╚══╝
+                    """ + RESET);
+            System.out.println(CYAN + """
+                       ███████╗██╗░░░██╗███████╗███╗░░██╗████████╗░██████╗
+                       ██╔════╝██║░░░██║██╔════╝████╗░██║╚══██╔══╝██╔════╝
+                       █████╗░░╚██╗░██╔╝█████╗░░██╔██╗██║░░░██║░░░╚█████╗░
+                       ██╔══╝░░░╚████╔╝░██╔══╝░░██║╚████║░░░██║░░░░╚═══██╗
+                       ███████╗░░╚██╔╝░░███████╗██║░╚███║░░░██║░░░██████╔╝
+                       ╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚══╝░░░╚═╝░░░╚═════╝░
+
                     """ + RESET);
 
             System.out.println(MORADO + "《1》" + RESET + " Iniciar sesión");
