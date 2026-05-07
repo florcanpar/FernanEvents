@@ -1,14 +1,16 @@
 package controlador;
 
 import modelo.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class GestionSistema {
 
-    public static Usuario[] usuarios = new Usuario[20];
+    private static HashMap<String, Usuario> usuarios = new HashMap<>();
     public static ArrayList<Evento> eventos = new ArrayList<>();
 
     private static Administrador adminPrincipal;
@@ -17,16 +19,35 @@ public class GestionSistema {
 
     public static void setAdminPrincipal(Administrador administrador) {
         adminPrincipal = administrador;
+        añadirUsuario(administrador);
     }
 
-    public static Usuario autenticar(String usuario1, String contrasenia) {
-        for (Usuario usuario : usuarios) {
-            if (usuario != null && usuario.getNombre().equals(usuario1) && usuario.validarAcceso(contrasenia)) {
-                registrarLog("Login exitoso: " + usuario1);
-                return usuario;
-            }
+    public static void añadirUsuario(Usuario u) {
+        usuarios.put(u.getId(), u);
+    }
+
+    public static void eliminarUsuario(String id) {
+        usuarios.remove(id);
+    }
+
+    public static Usuario buscarUsuarioPorId(String id) {
+        return usuarios.get(id);
+    }
+
+    public static Usuario buscarUsuarioPorNombre(String nombre) {
+        for (Usuario usuario : usuarios.values()) {
+            if (usuario.getNombre().equals(nombre)) return usuario;
         }
-        registrarLog("Intento de login fallido: " + usuario1);
+        return null;
+    }
+
+    public static Usuario autenticar(String nombre, String contrasenia) {
+        Usuario usuario = buscarUsuarioPorNombre(nombre);
+        if (usuario != null && usuario.validarAcceso(contrasenia)) {
+            registrarLog("Login exitoso: " + nombre);
+            return usuario;
+        }
+        registrarLog("Intento de login fallido: " + nombre);
         return null;
     }
 
@@ -41,33 +62,20 @@ public class GestionSistema {
 
         if (asistente.getCartera() >= coste && tipoEntrada.getStockDisponible() >= cantidad) {
             asistente.setCartera(asistente.getCartera() - coste);
+            if (adminPrincipal != null) adminPrincipal.setCartera(adminPrincipal.getCartera() + (coste * 0.10));
 
-            if (adminPrincipal != null) {
-                adminPrincipal.setCartera(adminPrincipal.getCartera() + (coste * 0.10));
-            }
-
-            Organizador creador = buscarOrganizadorPorId(evento.getIdOrganizador());
-            if (creador != null) {
+            Usuario creador = buscarUsuarioPorId(evento.getIdOrganizador());
+            if (creador instanceof Organizador) {
                 creador.setCartera(creador.getCartera() + (coste * 0.90));
             }
 
             tipoEntrada.registrarVenta(cantidad);
             asistente.añadirEntrada(new Entrada(evento, tipoEntrada, cantidad));
-
             registrarLog("COMPRA: " + asistente.getNombre() + " compró " + cantidad + " de " + evento.getNombre());
             guardarDatosFisicos();
             return true;
         }
         return false;
-    }
-
-    private static Organizador buscarOrganizadorPorId(String id) {
-        for (Usuario u : usuarios) {
-            if (u instanceof Organizador && u.getId().equals(id)) {
-                return (Organizador) u;
-            }
-        }
-        return null;
     }
 
     public static void listarEventos() {
@@ -80,15 +88,12 @@ public class GestionSistema {
     }
 
     public static Evento getEvento(int i) {
-        if (i >= 0 && i < eventos.size()) {
-            return eventos.get(i);
-        }
-        return null;
+        return (i >= 0 && i < eventos.size()) ? eventos.get(i) : null;
     }
 
     public static void guardarDatosFisicos() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_EVENTOS))) {
-            oos.writeObject(eventos);
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(ARCHIVO_EVENTOS))) {
+            objectOutputStream.writeObject(eventos);
         } catch (IOException e) {
             System.err.println("Error al guardar datos: " + e.getMessage());
         }
@@ -107,50 +112,28 @@ public class GestionSistema {
     }
 
     public static void registrarLog(String mensaje) {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(ARCHIVO_LOG, true)))) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            out.println("[" + dtf.format(LocalDateTime.now()) + "] " + mensaje);
+        try (PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(ARCHIVO_LOG, true)))) {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            printWriter.println("[" + dateTimeFormatter.format(LocalDateTime.now()) + "] " + mensaje);
         } catch (IOException e) {
             System.err.println("Error en el log: " + e.getMessage());
         }
     }
 
     public static void listarUsuarios() {
-        for (Usuario usuario : usuarios) {
-            if (usuario != null) {
-                System.out.println(usuario.getId() + " - " + usuario.getNombre() +
-                        " [" + usuario.getClass().getSimpleName() + "]");
-            }
+        for (Usuario u : usuarios.values()) {
+            System.out.println(u.toString());
         }
     }
 
     public static boolean cambiarEstadoBloqueo(String id, boolean desbloqueado) {
-        for (Usuario usuario : usuarios) {
-            if (usuario != null && usuario.getId().equals(id)) {
-                if (desbloqueado) usuario.desbloquear(); else usuario.bloquear();
-                registrarLog("ESTADO: Usuario " + id + (desbloqueado ? " desbloqueado" : " bloqueado"));
-                return true;
-            }
+        Usuario u = buscarUsuarioPorId(id);
+        if (u != null) {
+            if (desbloqueado) u.desbloquear();
+            else u.bloquear();
+            registrarLog("ESTADO: Usuario " + id + (desbloqueado ? " desbloqueado" : " bloqueado"));
+            return true;
         }
         return false;
-    }
-
-    public static void guardarDatos() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("eventos.dat"))) {
-            oos.writeObject(eventos); // Guarda el ArrayList completo de golpe[cite: 5]
-        } catch (IOException e) {
-            System.out.println("Error al escribir en el fichero: " + e.getMessage());
-        }
-    }
-
-    public static void cargarDatos() {
-        File fichero = new File("eventos.dat");
-        if (fichero.exists()) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fichero))) {
-                eventos = (ArrayList<Evento>) ois.readObject(); // Carga la lista dinámica[cite: 5]
-            } catch (Exception e) {
-                System.out.println("Error al cargar: " + e.getMessage());
-            }
-        }
     }
 }

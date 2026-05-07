@@ -38,7 +38,7 @@ public class Asistente extends Usuario {
         if (this.amigos.isEmpty()) {
             this.amigos = emailAmigo;
         } else {
-            this.amigos += ", " + emailAmigo;
+            this.amigos += "\n" + emailAmigo;
         }
     }
 }
