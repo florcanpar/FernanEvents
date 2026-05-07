@@ -1,7 +1,11 @@
 package modelo;
-import utilidades.Aumentable;
 
-public class Entrada implements Aumentable {
+import utilidades.Aumentable;
+import java.io.Serializable;
+
+public class Entrada implements Aumentable, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Evento evento;
     private TipoEntrada tipo;
     private int cantidad;
@@ -12,7 +16,6 @@ public class Entrada implements Aumentable {
         this.cantidad = cantidad;
     }
 
-    // Implementación de la interfaz Aumentable
     @Override
     public double getPrecioTotal() {
         return tipo.getPrecio() * cantidad;
@@ -40,11 +43,13 @@ public class Entrada implements Aumentable {
 
     @Override
     public void aumentaCantidad(int cantidad) {
-
+        this.cantidad += cantidad;
     }
 
     @Override
     public void disminuyeCantidad(int cantidad) {
-
+        if (this.cantidad >= cantidad) {
+            this.cantidad -= cantidad;
+        }
     }
 }

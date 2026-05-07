@@ -1,6 +1,10 @@
 package modelo;
 
-public class TipoEntrada {
+import java.io.Serializable;
+
+public class TipoEntrada implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String nombre, descripcion;
     private double precio;
     private int stockTotal;
@@ -29,9 +33,11 @@ public class TipoEntrada {
     public double getPrecio() {
         return precio;
     }
+
     public String getNombre() {
         return nombre;
     }
+
     public int getStockTotal() {
         return stockTotal;
     }

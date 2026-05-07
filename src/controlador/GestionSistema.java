@@ -134,4 +134,23 @@ public class GestionSistema {
         }
         return false;
     }
+
+    public static void guardarDatos() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("eventos.dat"))) {
+            oos.writeObject(eventos); // Guarda el ArrayList completo de golpe[cite: 5]
+        } catch (IOException e) {
+            System.out.println("Error al escribir en el fichero: " + e.getMessage());
+        }
+    }
+
+    public static void cargarDatos() {
+        File fichero = new File("eventos.dat");
+        if (fichero.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fichero))) {
+                eventos = (ArrayList<Evento>) ois.readObject(); // Carga la lista dinámica[cite: 5]
+            } catch (Exception e) {
+                System.out.println("Error al cargar: " + e.getMessage());
+            }
+        }
+    }
 }
